@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var favorite = sequelize.define("Favorite", {
+    var Favorite = sequelize.define("Favorite", {
         fav: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -24,6 +24,6 @@ module.exports = function (sequelize, DataTypes) {
             }
         });
     };
-};
 
-return Favorite;
+ return Favorite;   
+};
