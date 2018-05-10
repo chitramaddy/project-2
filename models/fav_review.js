@@ -1,6 +1,6 @@
-module.exports = function(sequelize, DataTypes) {
-    var cart = sequelize.define("cart", {
-        shopping: {
+module.exports = function (sequelize, DataTypes) {
+    var Favorite = sequelize.define("Favorite", {
+        fav: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
@@ -14,16 +14,16 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
 
-    cart.associate = function (models) {
-        cart.hasMany(models.cart, {
+    Favorite.associate = function (models) {
+        Favorite.hasMany(models.Favorite, {
             onDelete: "cascade"
         });
-        cart.belongsTo(models.user, {
+        Favorite.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
             }
         });
     };
 
-  return cart;  
+ return Favorite;   
 };
