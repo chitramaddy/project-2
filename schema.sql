@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS chef_den_db;
+
+CREATE DATABASE chef_den_db;
