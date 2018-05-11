@@ -9,7 +9,12 @@
                 <h1>Chef's Den</h1>
             </div>
             <div class="login">
-                <h6 id="open-login-modal">login</h6>
+                <div>
+                    <h6 class="login-buttons" id="sign-up-modal">sign up</h6>
+                </div>
+                <div>
+                    <h6 class="login-buttons" id="open-login-modal">login</h6>
+                </div>
             </div>
         </div>
 
@@ -20,19 +25,10 @@
             <button class="main-button" type="button" id="search-button">Search</button>
         </div>
 
-        <div class="results-area">
-            {{#each matches}}
-            <div class="result">
-                <ul>
-                    <li>Name: {{recipeName}}</li>
-                    <li>Ingredients: {{ingredients}}</li>
-                    <li>Rating: {{rating}}</li>
-                    <li>Preparation Time: {{totalTimeInSeconds}}</li>
-                </ul>
-            </div>
-            {{/each}}
-        </div>
+    </div>
 
+    <div class="results-area">
+        {{>recipes/recipe-block}}
     </div>
 
 </div>
@@ -40,6 +36,28 @@
 <!--  Modals  -->
 
 <div id="login-modal" class="modal">
+
+    <form class="modal-content animate">
+        <div class="login-container">
+            <label for="username">
+                <b>Username</b>
+            </label>
+            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="username"required>
+            <label for="password">
+                <b>Password</b>
+            </label>
+            <input class="login-modal-input" type="password" placeholder="Enter Password" name="password" id="password"required>
+            <button class="login-modal-button" type="submit" id="login">Login</button>
+        </div>
+
+        <div class="login-container cancel-container">
+            <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+        </div>
+    </form>
+
+</div>
+
+<div id="signup-modal" class="modal">
 
     <form class="modal-content animate">
         <div class="login-container">

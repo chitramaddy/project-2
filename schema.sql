@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS chef_den_db;
+DROP DATABASE IF EXISTS chefs_den_db;
 
-CREATE DATABASE chef_den_db;
+CREATE DATABASE chefs_den_db;
