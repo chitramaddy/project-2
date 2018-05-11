@@ -32,7 +32,7 @@ function makeButtonsFor(filterName){
 $(document).ready(function () {
 
 
-    $("#open-login-modal").hover(
+    $(".login-buttons").hover(
         (function () {
             $(this).css("color", "yellow");
         }),
@@ -43,6 +43,10 @@ $(document).ready(function () {
 
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();
+    })
+
+    $("#signup-modal").on("click", function () {
+        $("#signup-modal").show();
     })
 
     $(".close").on("click", function () {
@@ -72,6 +76,53 @@ $(document).ready(function () {
 
         //show the modal
         $("#filters-modal").show();
+    })
+
+    $("#search-button").on("click", function(event) {
+        event.preventDefault();
+
+        var query = {
+            query: $("#query").val().trim()
+        };
+
+        $.ajax("/api/recipes", {
+            type: "POST",
+            data: query
+          }).then(function() {
+                console.log("posted stuff");
+                location.reload();
+
+            }
+          );
+    })
+
+    $("#login").on("click", function() {
+        var loginInfo = {
+            username: $("#username").val().trim(),
+            password: $("#password").val().trim()
+        }
+        $.ajax("/api/login", {
+            type: "POST",
+            data: loginInfo
+
+        }).then(function() {
+            console.log("User is logging in");
+            location.reload();
+        })
+    })
+
+    $("#sign-up").on("click", function() {
+        var newUser = {
+            email: $("#email").val().trim(),
+            password: $("$password").val().trim()
+        }
+        $.ajax("/api/user", {
+            type: "POST",
+            data: newUser
+        }).then(function() {
+            console.log("User has been added.");
+            location.reload();
+        })
     })
 
 })
