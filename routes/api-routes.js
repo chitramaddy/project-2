@@ -8,7 +8,7 @@ var app_key = "e92f49e132a104a2da4588b89f9f4eea";
 
 module.exports = function (app) {
 
-    app.get("/", function (req, res) {
+    app.post("/api/signup", function (req, res) {
         request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&chicken",
             function(error, response, body) {
                 if(!error && response.statusCode === 200){
