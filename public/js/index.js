@@ -45,7 +45,7 @@ $(document).ready(function () {
         $("#login-modal").show();
     })
 
-    $("#signup-modal").on("click", function () {
+    $("#open-signup-modal").on("click", function () {
         $("#signup-modal").show();
     })
 
@@ -97,6 +97,8 @@ $(document).ready(function () {
     })
 
     $("#login").on("click", function() {
+        event.preventDefault();
+
         var loginInfo = {
             username: $("#username").val().trim(),
             password: $("#password").val().trim()
@@ -112,9 +114,14 @@ $(document).ready(function () {
     })
 
     $("#sign-up").on("click", function() {
+        event.preventDefault();
+        
         var newUser = {
+            username: $("#username").val().trim(),
             email: $("#email").val().trim(),
-            password: $("$password").val().trim()
+            password: $("$password").val().trim(),
+            about: $("#about").val().trim(),
+            img_url: $("#img-url").val().trim()
         }
         $.ajax("/api/user", {
             type: "POST",
