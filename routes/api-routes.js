@@ -35,4 +35,17 @@ module.exports = function (app) {
     app.get("/recipes", function(req, res){
         res.render("index");
     })
+
+    app.post("/api/login", function(req, res) {
+        console.log(req.body)
+        db.User.create({
+          email: req.body.email,
+          password: req.body.password,
+          created_at: req.body.created_at
+        }).then(function(results) {
+          // `results` here would be the newly created user
+          console.log("added user "+results);
+          
+        });
+      });
 }

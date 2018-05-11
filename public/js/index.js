@@ -96,10 +96,12 @@ $(document).ready(function () {
           );
     })
 
-    $("#login").on("click", function() {
+    $("#login").on("click", function(event) {
+        event.preventDefault();
         var loginInfo = {
             username: $("#username").val().trim(),
-            password: $("#password").val().trim()
+            password: $("#password").val().trim(),
+            email: $
         }
         $.ajax("/api/login", {
             type: "POST",
