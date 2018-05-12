@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
         },
         recipe_id: {
-            type:DataTypes.INTEGER
+            type:DataTypes.STRING
         }, 
         recipe_title: {
             type: DataTypes.TEXT
