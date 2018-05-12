@@ -100,8 +100,7 @@ $(document).ready(function () {
         event.preventDefault();
         var loginInfo = {
             username: $("#username").val().trim(),
-            password: $("#password").val().trim(),
-            email: $
+            password: $("#login-password").val().trim()
         }
         $.ajax("/api/login", {
             type: "POST",
