@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-       reciepe_img: {
+       recipe_img: {
         type: DataTypes.STRING,
         },
         review: {
@@ -21,10 +21,10 @@ module.exports = function (sequelize, DataTypes) {
         foreignKey: {
             type: DataTypes.STRING,
         },
-        reciepe_id: {
+        recipe_id: {
             type:DataTypes.INTEGER
         }, 
-        reciepe_title: {
+        recipe_title: {
             type: DataTypes.TEXT
         }
     });
