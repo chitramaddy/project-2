@@ -22,4 +22,27 @@ module.exports = function (app) {
 
     });
   });
+
+  app.post("/api/recipes/", function (req, res) {
+    var query = req.body.query;
+    request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
+      function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+          //  have to parse the response to JSON
+          var hbsObject = JSON.parse(body);
+        }
+        //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
+        //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
+        for (var i = 0; i < hbsObject.matches.length; i++) {
+          var img = hbsObject.matches[i].smallImageUrls[0];
+          img = img.slice(0, -2);
+          hbsObject.matches[i].smallImageUrls = {
+            smallImageUrls: img
+          };
+        }
+        res.render("index", hbsObject);
+        //location.reload();
+      })
+
+  });
 }

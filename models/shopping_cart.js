@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         recipeId: {
             type: DataTypes.INTEGER
         }, 
-        ingridentName: {
+        ingredientName: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
