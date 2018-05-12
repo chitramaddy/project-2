@@ -11,6 +11,17 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: false,
             len: [1]
+        },
+        review: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        rating: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        foreignKey: {
+            type: DataTypes.STRING,
         }
     });
 
@@ -25,5 +36,5 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
 
- return Favorite;   
+    return Favorite;
 };
