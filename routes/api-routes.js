@@ -14,6 +14,7 @@ module.exports = function (app) {
       email: req.body.email,
       password: req.body.password,
       username: req.body.username,
+     // img_url: req.body.img_url,
       created_at: req.body.created_at
     }).then(function (results) {
       // `results` here would be the newly created user
