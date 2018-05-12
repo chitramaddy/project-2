@@ -28,19 +28,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         img_url: {
+            type: DataTypes.STRING,
             link: "http://fillmurray.com/200/300"
         },
         like_dislike: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        },
-        id: {
-            type: DataTypes.STRING,
-            unique: true,
-            validate: {
-                isID: true
-            }
         }
+        
     });
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
