@@ -19,6 +19,17 @@ module.exports = function (app) {
         res.render("favorites");
     })
 
+    app.delete("/api/favorites/:id", function(req, res) {
+        db.Favorite.destroy({
+          where: {
+            id: req.params.id
+          }
+        }).then(function(dbFavorite) {
+          res.json(dbFavorite);
+        });
+      });
+    
+
 
 };
 
