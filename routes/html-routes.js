@@ -14,6 +14,11 @@ module.exports = function (app) {
         res.render("index");
     });
 
-    
+    //route for displaying favorites page
+    app.get("/favorites", function(req, res){
+        res.render("favorites");
+    })
+
+
 };
 
