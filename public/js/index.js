@@ -113,16 +113,17 @@ $(document).ready(function () {
         })
     })
 
-    $("#sign-up").on("click", function(event) {
+    $(".login-modal-button").on("click", function(event) {
         event.preventDefault();
         
         var newUser = {
-            username: $("#username").val().trim(),
-            email: $("#email").val().trim(),
-            password: $("$password").val().trim(),
-            about: $("#about").val().trim(),
-            img_url: $("#img-url").val().trim()
+            username: $("#signup-username").val().trim(),
+            email: $("#signup-email").val().trim(),
+            password: $("#signup-password").val().trim(),
+            about: $("#signup-about").val().trim(),
+            img_url: $("#signup-img-url").val().trim()
         }
+        console.log(newUser);
         $.ajax("/api/user", {
             type: "POST",
             data: newUser
