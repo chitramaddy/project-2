@@ -32,7 +32,7 @@ function makeButtonsFor(filterName){
 $(document).ready(function () {
 
 
-    $("#open-login-modal").hover(
+    $(".login-buttons").hover(
         (function () {
             $(this).css("color", "yellow");
         }),
@@ -43,6 +43,10 @@ $(document).ready(function () {
 
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();
+    })
+
+    $("#open-signup-modal").on("click", function () {
+        $("#signup-modal").show();
     })
 
     $(".close").on("click", function () {
@@ -72,6 +76,60 @@ $(document).ready(function () {
 
         //show the modal
         $("#filters-modal").show();
+    })
+
+    $("#search-button").on("click", function(event) {
+        event.preventDefault();
+
+        var query = {
+            query: $("#query").val().trim()
+        };
+
+        $.ajax("/api/recipes", {
+            type: "POST",
+            data: query
+          }).then(function() {
+                console.log("posted stuff");
+                location.reload();
+
+            }
+          );
+    })
+
+    $("#login").on("click", function(event) {
+        event.preventDefault();
+        var loginInfo = {
+            username: $("#username").val().trim(),
+            password: $("#login-password").val().trim()
+        }
+        $.ajax("/api/login", {
+            type: "POST",
+            data: loginInfo
+
+        }).then(function() {
+            console.log("User is logging in");
+            location.reload();
+        })
+    })
+
+    $(".login-modal-button").on("click", function(event) {
+        event.preventDefault();
+        
+        var newUser = {
+            username: $("#signup-username").val().trim(),
+            email: $("#signup-email").val().trim(),
+            password: $("#signup-password").val().trim(),
+            about: $("#signup-about").val().trim(),
+            img_url: $("#signup-img-url").val().trim()
+        }
+        console.log(newUser);
+        $.ajax("/api/user", {
+            type: "POST",
+            data: newUser
+        }).then(function() {
+            console.log("User has been added.");
+            location.reload();
+        })
     })
 
 })

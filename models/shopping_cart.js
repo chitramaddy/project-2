@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var cart = sequelize.define("cart", {
+    var cart = sequelize.define("Cart", {
         shopping: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     cart.associate = function (models) {
-        cart.hasMany(models.cart, {
+        cart.hasMany(models.Cart, {
             onDelete: "cascade"
         });
         cart.belongsTo(models.User, {
