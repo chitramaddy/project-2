@@ -34,15 +34,8 @@ module.exports = function (sequelize, DataTypes) {
         like_dislike: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        },
-        id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-            primaryKey: true,
-            validate: {
-                isID: true
-            }
         }
+        
     });
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);

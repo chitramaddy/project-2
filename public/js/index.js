@@ -112,7 +112,7 @@ $(document).ready(function () {
         })
     })
 
-    $(".login-modal-button").on("click", function(event) {
+    $("#signup-button").on("click", function(event) {
         event.preventDefault();
         
         var newUser = {
@@ -122,7 +122,6 @@ $(document).ready(function () {
             about: $("#signup-about").val().trim(),
             img_url: $("#signup-img-url").val().trim()
         }
-        console.log(newUser);
         $.ajax("/api/user", {
             type: "POST",
             data: newUser
