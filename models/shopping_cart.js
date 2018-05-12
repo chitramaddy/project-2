@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
             len: [1]
         }, 
         recipeId: {
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER
         }, 
         ingridentName: {
             type: DataTypes.TEXT,
