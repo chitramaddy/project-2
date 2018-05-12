@@ -27,7 +27,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true
         },
-        img_url: {
+        profile_img: {
+            type: DataTypes.STRING,
             link: "http://fillmurray.com/200/300"
         },
         like_dislike: {
@@ -35,8 +36,9 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
         },
         id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             unique: true,
+            primaryKey: true,
             validate: {
                 isID: true
             }
