@@ -11,6 +11,17 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: false,
             len: [1]
+        }, 
+        recipeId: {
+            type: DataTypes.STRING
+        }, 
+        ingridentName: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        qty: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
 
