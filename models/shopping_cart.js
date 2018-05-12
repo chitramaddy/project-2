@@ -26,9 +26,6 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     cart.associate = function (models) {
-        cart.hasMany(models.Cart, {
-            onDelete: "cascade"
-        });
         cart.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
