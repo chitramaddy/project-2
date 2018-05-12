@@ -4,6 +4,8 @@ var request = require("request");
 var app_id = "3f2c9a8d";
 var app_key = "e92f49e132a104a2da4588b89f9f4eea";
 
+var hbsObject = {};
+
 function fixImage(object) {
   for (var i = 0; i < hbsObject.matches.length; i++) {
     var img = hbsObject.matches[i].smallImageUrls[0];
@@ -25,7 +27,7 @@ module.exports = function (app) {
       email: req.body.email,
       password: req.body.password,
       username: req.body.username,
-     // img_url: req.body.img_url,
+      img_url: req.body.img_url,
       created_at: req.body.created_at
     }).then(function (results) {
       // `results` here would be the newly created user
@@ -40,7 +42,7 @@ module.exports = function (app) {
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
-          var hbsObject = JSON.parse(body);
+          hbsObject = JSON.parse(body);
         }
         //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
         //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
@@ -48,6 +50,29 @@ module.exports = function (app) {
         //console.log(hbsObject);
         res.send(hbsObject);
       })
+  });
 
+  //one way of doing it
+
+  //when the heart is clicked,
+  //store that results.matches[i].id in favorites table
+  //when the favorites page is loaded get all the items on the favorite page to load
+
+  //Where as the other way is to send a request for a specific id 
+  app.get("/recipes/:id", function (req, res) {
+    var id = req.params.id;
+
+    request("http://api.yummly.com/v1/api/recipe/" + id + "?_app_id=" + app_id + "&_app_key=" + app_key,
+      function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+          //  have to parse the response to JSON
+          hbsObject = JSON.parse(body);
+        }
+        //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
+        //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
+        fixImage(hbsObject);
+        //console.log(hbsObject);
+        res.send(hbsObject);
+      })
   });
 }
