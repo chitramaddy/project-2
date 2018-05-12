@@ -7,10 +7,8 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-        body: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            len: [1]
+       reciepe_img: {
+        type: DataTypes.STRING,
         },
         review: {
             type: DataTypes.TEXT,
@@ -22,6 +20,12 @@ module.exports = function (sequelize, DataTypes) {
         },
         foreignKey: {
             type: DataTypes.STRING,
+        },
+        reciepe_id: {
+            type:DataTypes.INTEGER
+        }, 
+        reciepe_title: {
+            type: DataTypes.TEXT
         }
     });
 
