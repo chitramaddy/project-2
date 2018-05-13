@@ -10,13 +10,9 @@ var key = keys.yummly.app_key;
 
 function fixImage(resObject) {
   for (var i = 0; i < resObject.matches.length; i++) {
-    if (resObject.matches.length[i]) {
+    if (resObject.matches[i].smallImageUrls) {
       var img = resObject.matches[i].smallImageUrls[0];
-      img = img.slice(0, -2);
-      img = img + "300";
-      resObject.matches[i].smallImageUrls = {
-        smallImageUrls: img
-      };
+      resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
       resObject.matches[i].totalTimeInSeconds = resObject.matches[i].totalTimeInSeconds / 60;
     }
   }
@@ -41,7 +37,7 @@ module.exports = function (app) {
     });
   });
 
-  app.post("/api/recipes/", function (req, res) {
+  app.post("/recipes/", function (req, res) {
     var query = req.body.query;
     var ingredients = req.body.ingredients;
     console.log(query);
@@ -70,12 +66,12 @@ module.exports = function (app) {
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
-          hbsObject = JSON.parse(body);
+          var hbsObject = JSON.parse(body);
         }
         //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
         //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
-        fixImage(hbsObject);
-        //console.log(hbsObject);
+        //fixImage(hbsObject);
+        console.log(hbsObject);
         res.send(hbsObject);
       })
   });

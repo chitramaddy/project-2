@@ -22,14 +22,14 @@ function showChosenIngredients() {
     if (chosenIngredients.length > 0) {
         var header = $("<h3>");
         header.text("Chosen Ingredients").addClass("chosen-ingredients-header");
-        $("#filters-area").append(header);
+        $("#ingredients-area").append(header);
     }
     // add each ingredient as a button to the ingredients area
     $("filters-area").append(header);
     for (var i = 0; i < chosenIngredients.length; i++) {
         var button = $("<button>");
         button.text(chosenIngredients[i]).addClass("filter-button chosen-ingredient");
-        $("#filters-area").append(button);
+        $("#ingredients-area").append(button);
     }
 }
 
@@ -91,13 +91,14 @@ $(document).ready(function () {
         event.preventDefault();
         var query = $("#query").val().trim();
         chosenIngredients.push(query);
-        showChosenFilters();
+        showChosenIngredients();
         $("#query").val("");
     })
 
     //  Event listener:  click to subtract ingredient from the ingredients array
-    $(".chosen-ingredient").on("click", function() {
+    $("#ingredients-area").on("click", ".chosen-ingredient", function() {
         //remove this ingredient from the array
+        console.log($(this).text());
     })
 
     //  Event listener:  click to add the selected filters to the filters array.\

@@ -28,7 +28,7 @@ function renderResults(res) {
 
         var liImage = $("<li>");
         var image = $("<img>");
-        image.attr("src", matches.smallImageUrls.smallImageUrls);
+        image.attr("src", matches.smallImageUrls);
         liImage.append(image);
 
         var liName = $("<li>");
