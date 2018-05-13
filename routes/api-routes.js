@@ -61,8 +61,8 @@ module.exports = function (app) {
 
   //Where as the other way is to send a request for a specific id 
   app.get("/recipes/:id", function (req, res) {
-    var recipeId = req.params.id;
-    request("http://api.yummly.com/v1/api/recipe/" + recipeId + "?_app_id=" + id + "&_app_key=" + key,
+
+    request("http://api.yummly.com/v1/api/recipe/" + id + "?_app_id=" + app_id + "&_app_key=" + app_key,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
@@ -75,4 +75,5 @@ module.exports = function (app) {
         res.send(hbsObject);
       })
   });
+
 }

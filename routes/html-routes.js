@@ -14,6 +14,32 @@ module.exports = function (app) {
         res.render("index");
     });
 
-    
+    //route for displaying favorites page
+    app.get("/favorites", function(req, res){
+        res.render("favorites");
+    })
+
+    //to delete a favorited item
+    app.delete("/api/favorites/:id", function(req, res) {
+        db.Favorite.destroy({
+          where: {
+            id: req.params.id
+          }
+        }).then(function(dbFavorite) {
+          res.json(dbFavorite);
+        });
+      });
+
+      //to show the user profile when user clicks on the profile
+      app.get("api/user/:id", function(req, res){
+        db.User.findOne({
+          where: {
+            id: req.params.id
+          }
+        }).then(function(dbUser) {
+          res.json(dbUser);
+        });      
+    })
+
 };
 
