@@ -1,20 +1,26 @@
+require("dotenv").config();
+
 var db = require("../models");
 var request = require("request");
+var keys = require("../keys");
 
-var app_id = "3f2c9a8d";
-var app_key = "e92f49e132a104a2da4588b89f9f4eea";
+var id = keys.yummly.app_id;
+var key = keys.yummly.app_key;
 
-var hbsObject = {};
 
-function fixImage(object) {
-  for (var i = 0; i < hbsObject.matches.length; i++) {
-    var img = hbsObject.matches[i].smallImageUrls[0];
-    img = img.slice(0, -2);
-    img = img + "600";
-    hbsObject.matches[i].smallImageUrls = {
-      smallImageUrls: img
-    };
+function fixImage(resObject) {
+  for (var i = 0; i < resObject.matches.length; i++) {
+    if (resObject.matches.length[i]) {
+      var img = resObject.matches[i].smallImageUrls[0];
+      img = img.slice(0, -2);
+      img = img + "300";
+      resObject.matches[i].smallImageUrls = {
+        smallImageUrls: img
+      };
+      resObject.matches[i].totalTimeInSeconds = resObject.matches[i].totalTimeInSeconds / 60;
+    }
   }
+  return resObject;
 }
 
 
@@ -32,23 +38,22 @@ module.exports = function (app) {
     }).then(function (results) {
       // `results` here would be the newly created user
       console.log("added user");
-
     });
   });
 
   app.post("/api/recipes/", function (req, res) {
     var query = req.body.query;
-    request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
+    var ingredients = req.body.ingredients;
+    console.log(query);
+    console.log(ingredients);
+    request("http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + query,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
-          hbsObject = JSON.parse(body);
+          var response = JSON.parse(body);
         }
-        //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
-        //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
-        fixImage(hbsObject);
-        //console.log(hbsObject);
-        res.send(hbsObject);
+        response = fixImage(response);
+        res.send(response);
       })
   });
 
