@@ -19,6 +19,7 @@ module.exports = function (app) {
         res.render("favorites");
     })
 
+    //to delete a favorited item
     app.delete("/api/favorites/:id", function(req, res) {
         db.Favorite.destroy({
           where: {
@@ -29,8 +30,16 @@ module.exports = function (app) {
         });
       });
 
-      app.get   
-
+      //to show the user profile when user clicks on the profile
+      app.get("api/user/:id", function(req, res){
+        db.User.findOne({
+          where: {
+            id: req.params.id
+          }
+        }).then(function(dbUser) {
+          res.json(dbUser);
+        });      
+    })
 
 };
 
