@@ -28,7 +28,8 @@ module.exports = function (app) {
           res.json(dbFavorite);
         });
       });
-    
+
+      app.get   
 
 
 };
