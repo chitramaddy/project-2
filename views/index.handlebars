@@ -19,16 +19,22 @@
         </div>
 
         <div class="main">
-            <input class="main-input" type="text" placeholder="Search..." id="query">
-            <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
-            <button class="main-button" type="button" id="open-filters-modal">Filters</button>
-            <button class="main-button" type="button" id="search-button">Search</button>
+            <div class="search-section">
+                <input class="main-input" type="text" placeholder="Search..." id="query">
+                <button class="main-button" type="button" id="add-ingredient">Add Ingredient</button>
+                <button class="main-button" type="button" id="open-filters-modal">Filters</button>
+                <button class="main-button" type="button" id="search-button">Search</button>
+            </div>
+            <div id="ingredients-area"></div>
+            <div id="filters-area"></div>
+
         </div>
+
+
 
     </div>
 
-    <div class="results-area">
-        {{>recipes/recipe-block}}
+    <div id="results-area">
     </div>
 
 </div>
@@ -42,7 +48,7 @@
             <label for="username">
                 <b>Username</b>
             </label>
-            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="username" required>
+            <input class="login-modal-input" type="text" placeholder="Enter Username" name="username" id="login-username" required>
             <label for="password">
                 <b>Password</b>
             </label>
@@ -72,7 +78,8 @@
             <label for="password">
                 <b>Password</b>
             </label>
-            <input class="login-modal-input" type="password" placeholder="Enter Password" name="signup-password" id="signup-password" required>
+            <input class="login-modal-input" type="password" placeholder="Enter Password" name="signup-password" id="signup-password"
+                required>
             <label for="about">
                 <b>About</b>
             </label>
@@ -108,10 +115,10 @@
         </div>
         <div class="filters-container selection-container">
             <div class="accept">
-                <button class="login-modal-button acceptbtn" type="button">Accept</button>
+                <button class="login-modal-button acceptbtn" type="button" id="add-filters" >Accept</button>
             </div>
             <div class="cancel">
-                <button class="login-modal-button cancelbtn" type="button">Cancel</button>
+                <button class="login-modal-button cancelbtn" type="button" id="filters-cancel" >Cancel</button>
             </div>
 
         </div>

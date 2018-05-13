@@ -38,7 +38,7 @@ h6 {
     padding: 20px 10px;
     background-color: white;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
 
 }
@@ -49,6 +49,7 @@ h6 {
     padding: 10px 20px;
     background-color: #fafafa;
     color: black;
+    text-align: center;
 }
 
 .header {
@@ -83,6 +84,8 @@ h6 {
 .main {
     text-align: center;
     padding: 10px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 
 .main-input, .main-button {
