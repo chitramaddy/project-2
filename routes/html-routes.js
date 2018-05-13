@@ -34,6 +34,10 @@ module.exports = function (app) {
     });
   });
 
+  //========================================
+
+  //user profile routes. 
+
   //to show the user when user clicks on show profile. Writing this as api route for checking. eventually this needs to be written as html route
   app.get("/api/user/:id", function (req, res) {
     db.User.findOne({
@@ -45,6 +49,20 @@ module.exports = function (app) {
     });
   });
 
+  //To update an user information. Writing this as api route for checking. eventually this needs to be written as html route
+  app.put("/api/user", function (req, res){
+    db.User.update(req.body, 
+      {
+      where:{
+        id: req.body.id
+      }
+    })
+    .then (function(dbUser){
+      res.json(dbUser);
+    })
+  })
+
+  //Route to deleting a user.
   app.delete("/api/user/:id", function (req, res) {
     db.User.destroy({
       where: {
