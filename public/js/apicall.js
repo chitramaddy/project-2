@@ -1,6 +1,13 @@
 var filters = [{
         name: "cuisines",
-        filters: ["african", "chinese", "japanese", "korean", "vietnamese", "thai", "indian", "british", "irish", "french", "italian", "mexican", "middle eastern", "jewish", "american", "cajun", "indian", "greek", "german", "nordic", "eastern european", "caribbean", "latin american"]
+        filters: [
+            {
+                "name": "african",
+                "code" : ""
+            },
+
+
+        "chinese", "japanese", "korean", "vietnamese", "thai", "indian", "british", "irish", "french", "italian", "mexican", "middle eastern", "jewish", "american", "cajun", "indian", "greek", "german", "nordic", "eastern european", "caribbean", "latin american"]
     },
     {
         name: "diets",
