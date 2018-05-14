@@ -4,8 +4,8 @@ var db = require("../models");
 var request = require("request");
 var keys = require("../keys");
 
-var id = keys.yummly.app_id;
-var key = keys.yummly.app_key;
+var app_id = keys.yummly.app_id;
+var app_key = keys.yummly.app_key;
 
 
 function fixImage(resObject) {
@@ -18,7 +18,6 @@ function fixImage(resObject) {
   }
   return resObject;
 }
-
 
 module.exports = function (app) {
 
@@ -42,7 +41,7 @@ module.exports = function (app) {
     var ingredients = req.body.ingredients;
     console.log(query);
     console.log(ingredients);
-    request("http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + query,
+    request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
@@ -61,8 +60,8 @@ module.exports = function (app) {
 
   //Where as the other way is to send a request for a specific id 
   app.get("/recipes/:id", function (req, res) {
-
-    request("http://api.yummly.com/v1/api/recipe/" + id + "?_app_id=" + app_id + "&_app_key=" + app_key,
+    var recipeId = req.params.id;
+    request("http://api.yummly.com/v1/api/recipe/" + recipeId + "?_app_id=" + app_id + "&_app_key=" + app_key,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
@@ -75,5 +74,4 @@ module.exports = function (app) {
         res.send(hbsObject);
       })
   });
-
 }
