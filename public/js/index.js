@@ -7,7 +7,7 @@ function makeButtonsFor(filterName) {
             for (var j = 0; j < filter.filters.length; j++) {
                 $("#" + filterName + "-section").empty();
                 var button = $("<button>");
-                button.addClass("filter-button");
+                button.addClass("filter-button " + filterName + "-button");
                 button.text(filter.filters[j]);
                 $("#" + filterName + "-content").append(button);
             }

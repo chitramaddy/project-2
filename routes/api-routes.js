@@ -41,7 +41,7 @@ module.exports = function (app) {
     var ingredients = req.body.ingredients;
     console.log(query);
     console.log(ingredients);
-    request("http://api.yummly.com/v1/api/recipes?_app_id=" + id + "&_app_key=" + key + "&q=" + query,
+    request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
