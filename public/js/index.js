@@ -7,7 +7,7 @@ function makeButtonsFor(filterName) {
             for (var j = 0; j < filter.filters.length; j++) {
                 $("#" + filterName + "-section").empty();
                 var button = $("<button>");
-                button.addClass("filter-button");
+                button.addClass("filter-button " + filterName + "-button");
                 button.text(filter.filters[j]);
                 $("#" + filterName + "-content").append(button);
             }
@@ -28,7 +28,7 @@ function showChosenIngredients() {
     $("filters-area").append(header);
     for (var i = 0; i < chosenIngredients.length; i++) {
         var button = $("<button>");
-        button.text(chosenIngredients[i]).addClass("filter-button chosen-ingredient");
+        button.text(chosenIngredients[i]).addClass("filter-button fas fa-trash chosen-ingredient");
         $("#ingredients-area").append(button);
     }
 }
@@ -98,7 +98,13 @@ $(document).ready(function () {
     //  Event listener:  click to subtract ingredient from the ingredients array
     $("#ingredients-area").on("click", ".chosen-ingredient", function() {
         //remove this ingredient from the array
-        console.log($(this).text());
+        var ingredient = $(this).text();
+        var indexOfIngredient = chosenIngredients.indexOf(ingredient);
+        chosenIngredients.splice(indexOfIngredient,1);
+        $("#ingredients-area").empty();
+        showChosenIngredients();
+
+
     })
 
     //  Event listener:  click to add the selected filters to the filters array.\
@@ -126,7 +132,7 @@ $(document).ready(function () {
             query.filters = chosenFilters;
         }
 
-        $.ajax("/api/recipes", {
+        $.ajax("/recipes", {
             type: "POST",
             data: query
         }).then(function (response) {
