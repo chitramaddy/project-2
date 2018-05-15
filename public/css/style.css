@@ -250,3 +250,16 @@ span.psw {
     margin: 1px;
 
 }
+
+#recipe-section {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+#recipe-section > div {
+    background-color: white;
+    padding: 5px;
+    color: black;
+    font-family: 'Pontano Sans', sans-serif;
+
+}

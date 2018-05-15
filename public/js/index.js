@@ -135,6 +135,17 @@ $(document).ready(function () {
         $("#query").val("");
     })
 
+    $("#results-area").on("click", "ul", function (){
+        var recipeId = $(this).attr("recipe-id");
+
+        $.ajax(("/recipes/" + recipeId), {
+            type: "GET"
+        }).then(function (response) {
+            console.log(response);
+            renderRecipe(response);
+        })
+    })
+
     //  Event listener:  click to send login information
     $("#login").on("click", function (event) {
         event.preventDefault();
