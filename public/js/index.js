@@ -7,8 +7,23 @@ function makeButtonsFor(filterName) {
             for (var j = 0; j < filter.filters.length; j++) {
                 $("#" + filterName + "-section").empty();
                 var button = $("<button>");
+                //  Take the search Value
+                var searchValue = filter.filters[j];
+                //  Find the string that follows the "^" character and set it as searchValueClean
+                var regex = /(?<=\^)[\w+.-]+/;
+                var searchValueClean = regex.exec(searchValue);
+                //  If the word starts with cuisine (ie. cuisine-american) then get rid of the cuisine part
+                //  Note:  regex.exec(string) returns an array - element 0 is the found word
+                if(searchValueClean[0].startsWith("cuisine")){
+                    //  regex:  take the value that follows "cuisine-"
+                    var cuisineRegex = /(?<=cuisine-)[\w+.-]+/;
+                    searchValueClean = cuisineRegex.exec(searchValueClean[0]);
+                    //  Make the first letter capital
+                    searchValueClean = searchValueClean[0].charAt(0).toUpperCase() + searchValueClean[0].substring(1);
+                }
                 button.addClass("filter-button " + filterName + "-button");
-                button.text(filter.filters[j]);
+                button.attr("search-value", searchValue);
+                button.text(searchValueClean);
                 $("#" + filterName + "-content").append(button);
             }
         }
@@ -107,32 +122,13 @@ $(document).ready(function () {
     })
 
     //  Event listener:  
-    $("filter-button").on("click", function() {
+    $("#filters-modal").on("click", ".filter-button", function() {
         //if the filter is clicked toggle selected
-    })
+        var filterName = $(this).text();
+        var filterClass = $(this).attr("class");
+        filterClass = filterClass.replace("filter-button ", "").replace("-button", "");
+        console.log("Name is: " + filterName + " and the class is " + filterClass);
 
-
-    //  Event listener:  click to search for the query and arrays if they exist.   Sends ajax call to api/recipes route and returns an object
-    $("#search-button").on("click", function (event) {
-        event.preventDefault();
-
-        var query = {
-            query: $("#query").val().trim()
-        };
-        /*if (chosenIngredients.length > 0) {
-            query.ingredients = chosenIngredients;
-        }
-        if (chosenFilters.length > 0) {
-            query.filters = chosenFilters;
-        }*/
-
-        $.ajax("/recipes/", {
-            type: "POST",
-            data: query
-        }).then(function (response) {
-            renderResults(response);
-        });
-        $("#query").val("");
     })
 
     //  Event listener:  click to send login information

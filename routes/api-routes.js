@@ -62,7 +62,6 @@ module.exports = function (app) {
       ///go through the array and construct each of the ampersand queries
     }*/
     
-    console.log(query);
     //console.log(ingredients);
     request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
       function (error, response, body) {
@@ -88,13 +87,9 @@ module.exports = function (app) {
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
-          var hbsObject = JSON.parse(body);
+          var recipe = JSON.parse(body);
         }
-        //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
-        //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
-        //fixImage(hbsObject);
-        console.log(hbsObject);
-        res.send(hbsObject);
+        res.send(recipe);
       })
   });
 }
