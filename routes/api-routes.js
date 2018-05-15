@@ -41,7 +41,7 @@ module.exports = function (app) {
     var query = req.body.query;
 
     //Arrays
-    var ingredients = req.body.ingredients;
+    /*var ingredients = req.body.ingredients;
     var cuisines = req.body.cuisines;
     var diets = req.body.diets;
     var intolerances = req.body.intolerances;
@@ -57,11 +57,10 @@ module.exports = function (app) {
     }
     if (intolerances.length > 0){
       ///go through the array and construct each of the ampersand queries
-    }
+    }*/
     
-
     console.log(query);
-    console.log(ingredients);
+    //console.log(ingredients);
     request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
