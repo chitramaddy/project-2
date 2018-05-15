@@ -41,13 +41,16 @@ module.exports = function (app) {
     var query = req.body.query;
 
     //Arrays
-    /*var ingredients = req.body.ingredients;
+    var ingredients = req.body.ingredients;
     var cuisines = req.body.cuisines;
     var diets = req.body.diets;
     var intolerances = req.body.intolerances;
 
     if (ingredients.length > 0){
       //go through the array and construct each of the ampersand queries
+      for(var i = 0; i<ingredients.length; i++){
+        
+      }
     }
     if (cuisines.length > 0 ){
       ///go through the array and construct each of the ampersand queries
