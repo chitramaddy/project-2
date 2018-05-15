@@ -1,7 +1,6 @@
 var filters = [{
         name: "cuisines",
-        filters: [
-            "cuisine^cuisine-american", "cuisine^cuisine-kid-friendly", "cuisine^cuisine-italian", "cuisine^cuisine-asian", "cuisine^cuisine-mexican", "cuisine^cuisine-french", "cuisine^cuisine-southwestern", "cuisine^cuisine-barbecue-bbq", "cuisine^cuisine-indian", "cuisine^cuisine-chinese", "cuisine^cuisine-mediterranean", "cuisine^cuisine-greek", "cuisine^cuisine-english", "cuisine^cuisine-spanish", "cuisine^cuisine-thai", "cuisine^cuisine-german", "cuisine^cuisine-moroccan", "cuisine^cuisine-irish", "cuisine^cuisine-cuban", "cuisine^cuisine-hawaiian", "cuisine^cuisine-swedish", "cuisine^cuisine-hungarian", "cuisine^cuisine-portuguese"]
+        filters: ["cuisine^cuisine-american", "cuisine^cuisine-kid-friendly", "cuisine^cuisine-italian", "cuisine^cuisine-asian", "cuisine^cuisine-mexican", "cuisine^cuisine-french", "cuisine^cuisine-southwestern", "cuisine^cuisine-barbecue-bbq", "cuisine^cuisine-indian", "cuisine^cuisine-chinese", "cuisine^cuisine-mediterranean", "cuisine^cuisine-greek", "cuisine^cuisine-english", "cuisine^cuisine-spanish", "cuisine^cuisine-thai", "cuisine^cuisine-german", "cuisine^cuisine-moroccan", "cuisine^cuisine-irish", "cuisine^cuisine-cuban", "cuisine^cuisine-hawaiian", "cuisine^cuisine-swedish", "cuisine^cuisine-hungarian", "cuisine^cuisine-portuguese"]
     },
     {
         name: "diets",
@@ -49,64 +48,106 @@ function renderResults(res) {
     }
 }
 
-function renderRecipe(res){
-    var recipeName = res.name;
-    var sourceRecipe = res.source.sourceRecipeUrl;
-    var image = res.images[0].hostedLargeUrl;
-    var type = res.attributes.course[0];
-    var ingredients = res.ingredientLines;
-    var servings = res.numberOfServings;
-    var rating = res.rating;
-    var totalTime = res.totalTime;
-
-    //console.log(res);
+function renderRecipe(res) {
     $("#recipe-section").empty();
 
+    var recipeName = res.name;
     var nameDiv = $("<div>");
-    var nameP = $("<p>");
-    nameP.text(recipeName);
-    nameDiv.append(nameP);
+    var nameH = $("<h4>");
+    nameH.text(recipeName);
+    nameDiv.append(nameH);
 
+    var sourceRecipe = res.source.sourceRecipeUrl;
     var sourceDiv = $("<div>");
     var sourceA = $("<a>");
-    sourceA.attr("href", sourceRecipe).attr("target", "_blank").text("Link to the recipe.");
+    sourceA.attr("href", sourceRecipe).attr("target", "_blank").text("Click here to get the instructions.");
     sourceDiv.append(sourceA);
 
+    var image = res.images[0].hostedLargeUrl;
     var imageDiv = $("<div>");
     var img = $("<img>");
     img.attr("src", image);
     imageDiv.append(img);
 
     var typeDiv = $("<div>");
-    var typeP = $("<p>");
-    typeP.text("Type: " + type);
-    typeDiv.append(typeP);
+    if (res.attributes.course) {
+        var type = res.attributes.course[0];
+        var typeP = $("<p>");
+        typeP.text("This recipe is great for " + type);
+        typeDiv.append(typeP);
+    }
 
+    var ingredients = res.ingredientLines;
     var ingredientsDiv = $("<div>");
+    var ingredientsHeader = $("<h4>");
+    ingredientsHeader.text("Ingredients:").addClass("recipe-modal-ingredients-header");
+    ingredientsDiv.append(ingredientsHeader);
     var ingredientsUl = $("<ul>");
-    for (var i = 0; i < ingredients.length; i++){
+    for (var i = 0; i < ingredients.length; i++) {
         var ingredientLi = $("<li>");
         ingredientLi.text(ingredients[i]);
-        ingredientsUl.append(ingredientLi);
+        ingredientsUl.addClass("recipe-modal-ingredients-content").append(ingredientLi);
     }
     ingredientsDiv.append(ingredientsUl);
 
+    var servings = res.numberOfServings;
     var servingsDiv = $("<div>");
     var servingsP = $("<p>");
     servingsP.text("Serves " + servings);
     servingsDiv.append(servingsP);
 
+    var rating = res.rating;
     var ratingDiv = $("<div>");
     var ratingP = $("<p>");
     ratingP.text("Rating: " + rating);
     ratingDiv.append(ratingP);
 
+    var totalTime = res.totalTime;
     var timeDiv = $("<div>");
     var timeP = $("<p>");
     timeP.text("Takes about " + totalTime);
     timeDiv.append(timeP);
 
-
-    $("#recipe-section").append(nameDiv, sourceDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv);
+    $("#recipe-section").append(nameDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv, sourceDiv);
     $("#recipes-modal").show();
 }
+
+
+$(document).ready(function() {
+
+        //  Event listener:  click to search for the query and arrays if they exist.   Sends ajax call to api/recipes route and returns an object
+        $("#search-button").on("click", function (event) {
+            event.preventDefault();
+    
+            var query = {
+                query: $("#query").val().trim()
+            };
+            /*if (chosenIngredients.length > 0) {
+                query.ingredients = chosenIngredients;
+            }
+            if (chosenFilters.length > 0) {
+                query.filters = chosenFilters;
+            }*/
+    
+            $.ajax("/recipes/", {
+                type: "POST",
+                data: query
+            }).then(function (response) {
+                renderResults(response);
+            });
+            $("#query").val("");
+        })
+
+        $("#results-area").on("click", "ul", function (){
+            var recipeId = $(this).attr("recipe-id");
+    
+            $.ajax(("/recipes/" + recipeId), {
+                type: "GET"
+            }).then(function (response) {
+                renderRecipe(response);
+            })
+        })
+
+
+
+})
