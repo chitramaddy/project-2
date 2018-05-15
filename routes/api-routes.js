@@ -65,7 +65,7 @@ module.exports = function (app) {
     }
     if (intolerances.length > 0){
       ///go through the array and construct each of the ampersand queries
-    }*/
+    }
     
     //console.log(ingredients);
     request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
