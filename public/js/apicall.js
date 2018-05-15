@@ -1,21 +1,15 @@
 var filters = [{
         name: "cuisines",
         filters: [
-            {
-                "name": "african",
-                "code" : ""
-            },
-
-
-        "chinese", "japanese", "korean", "vietnamese", "thai", "indian", "british", "irish", "french", "italian", "mexican", "middle eastern", "jewish", "american", "cajun", "indian", "greek", "german", "nordic", "eastern european", "caribbean", "latin american"]
+            "cuisine^cuisine-american", "cuisine^cuisine-kid-friendly", "cuisine^cuisine-italian", "cuisine^cuisine-asian", "cuisine^cuisine-mexican", "cuisine^cuisine-french", "cuisine^cuisine-southwestern", "cuisine^cuisine-barbecue-bbq", "cuisine^cuisine-indian", "cuisine^cuisine-chinese", "cuisine^cuisine-mediterranean", "cuisine^cuisine-greek", "cuisine^cuisine-english", "cuisine^cuisine-spanish", "cuisine^cuisine-thai", "cuisine^cuisine-german", "cuisine^cuisine-moroccan", "cuisine^cuisine-irish", "cuisine^cuisine-cuban", "cuisine^cuisine-hawaiian", "cuisine^cuisine-swedish", "cuisine^cuisine-hungarian", "cuisine^cuisine-portuguese"]
     },
     {
         name: "diets",
-        filters: ["pescetarian", "lacto vegetarian", "ovo vegetarian", "vegan", "paleo, primal", "and vegetarian"]
+        filters: ["388^Lacto vegetarian", "389^Ovo vegetarian", "390^Pescetarian", "386^Vegan", "387^Lacto-ovo vegetarian", "403^Paleo"]
     },
     {
         name: "intolerances",
-        filters: ["dairy", "egg", "gluten", "peanut", "sesame", "seafood", "shellfish", "soy", "sulfite", "tree nut", "wheat"]
+        filters: ["393^Gluten-Free", "394^Peanut-Free", "398^Seafood-Free", "399^Sesame-Free", "400^Soy-Free", "396^Dairy-Free", "397^Egg-Free", "401^Sulfite-Free", "395^Tree Nut-Free", "392^Wheat-Free"]
     }
 ];
 
