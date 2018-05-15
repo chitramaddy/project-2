@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true
         },
-        profile_img: {
+        img_url: {
             type: DataTypes.STRING,
             link: "http://fillmurray.com/200/300"
         },
