@@ -1,3 +1,20 @@
+//  Function to clean up the searchvalue string to be displayed as a button
+function cleanSearchValue(str) {
+    //  Find the string that follows the "^" character and set it as searchValueClean
+    var regex = /(?<=\^)[\w+. -]+/;
+    str = regex.exec(str);
+    //  If the word starts with cuisine (ie. cuisine-american) then get rid of the cuisine part
+    //  Note:  regex.exec(string) returns an array - element 0 is the found word
+    if (str[0].startsWith("cuisine")) {
+        //  regex:  take the value that follows "cuisine-"
+        var cuisineRegex = /(?<=cuisine-)[\w+.-]+/;
+        str = cuisineRegex.exec(str[0]);
+        //  Make the first letter capital
+        str = str[0].charAt(0).toUpperCase() + str[0].substring(1);
+    }
+    return str;
+}
+
 //  Function to make the filter buttons in the filters modal
 function makeButtonsFor(filterName) {
     $("#" + filterName + "-content").empty();
@@ -9,21 +26,19 @@ function makeButtonsFor(filterName) {
                 var button = $("<button>");
                 //  Take the search Value
                 var searchValue = filter.filters[j];
-                //  Find the string that follows the "^" character and set it as searchValueClean
-                var regex = /(?<=\^)[\w+.-]+/;
-                var searchValueClean = regex.exec(searchValue);
-                //  If the word starts with cuisine (ie. cuisine-american) then get rid of the cuisine part
-                //  Note:  regex.exec(string) returns an array - element 0 is the found word
-                if(searchValueClean[0].startsWith("cuisine")){
-                    //  regex:  take the value that follows "cuisine-"
-                    var cuisineRegex = /(?<=cuisine-)[\w+.-]+/;
-                    searchValueClean = cuisineRegex.exec(searchValueClean[0]);
-                    //  Make the first letter capital
-                    searchValueClean = searchValueClean[0].charAt(0).toUpperCase() + searchValueClean[0].substring(1);
-                }
+                var searchValueClean = cleanSearchValue(searchValue);
                 button.addClass("filter-button " + filterName + "-button");
                 button.attr("search-value", searchValue);
                 button.text(searchValueClean);
+                //check to see if this searchValue exists in the chosenFiltersSelected filterName array and addclass filter-selected if it is
+                for ( var k = 0; k < chosenFilters.length; k++){
+                    if(chosenFilters[k].name === filterName){
+                        var exists = chosenFilters[k].filters.includes(searchValue);
+                        if(exists){
+                            button.addClass("filter-selected");
+                        }
+                    }
+                }
                 $("#" + filterName + "-content").append(button);
             }
         }
@@ -50,7 +65,7 @@ function showChosenIngredients() {
 
 
 $(document).ready(function () {
-    
+
     //  Event listener: hovering over the buttons in the login area
     $(".login-buttons").hover(
         (function () {
@@ -111,24 +126,46 @@ $(document).ready(function () {
     })
 
     //  Event listener:  click to subtract ingredient from the ingredients array
-    $("#ingredients-area").on("click", ".chosen-ingredient", function() {
+    $("#ingredients-area").on("click", ".chosen-ingredient", function () {
         //remove this ingredient from the array
         var ingredient = $(this).text();
         var indexOfIngredient = chosenIngredients.indexOf(ingredient);
-        chosenIngredients.splice(indexOfIngredient,1);
+        chosenIngredients.splice(indexOfIngredient, 1);
         $("#ingredients-area").empty();
         showChosenIngredients();
 
     })
 
-    //  Event listener:  
-    $("#filters-modal").on("click", ".filter-button", function() {
-        //if the filter is clicked toggle selected
-        var filterName = $(this).text();
-        var filterClass = $(this).attr("class");
-        filterClass = filterClass.replace("filter-button ", "").replace("-button", "");
-        console.log("Name is: " + filterName + " and the class is " + filterClass);
-
+    //  Event listener:  Add the filter if the filter name is clicked
+    $("#filters-modal").on("click", ".filter-button", function () {
+        //take the search value of the button
+        var filterButtonName = $(this).attr("search-value");
+        //take the classes added to this filter
+        var filterButtonClasses = $(this).attr("class");
+        //extract the type and set it to a variable, ie. (diets, intolerances, cuisines)
+        var filterButtonType = filterButtonClasses.replace("filter-selected", "").replace("filter-button ", "").replace("-button", "");
+        //trim off the space at the end (annoying bug)
+        filterButtonType = filterButtonType.replace(" ", "");
+        //for loop to go find a match in the corresponding type
+        for (var i = 0; i < chosenFilters.length; i++){
+            //to help make it easier to read set chosenType to be the name of the type in the chosenFilters array
+            var chosenType = chosenFilters[i].name;
+            //if the chosenType is the same as the filterbuttonType then do either one of two things
+            if(chosenType === filterButtonType){
+                //to make it easier to read set the array of filters chosen that is inside that other inside array(confused yet?)
+                var theFiltersWithin = chosenFilters[i].filters;
+                //if the filter exists in the chosenFilters array then take it out of the array
+                if(theFiltersWithin.includes(filterButtonName)){
+                    var indexOfChosenFilter = theFiltersWithin.indexOf(filterButtonName);
+                    theFiltersWithin.splice(indexOfChosenFilter , 1);
+                    makeButtonsFor(filterButtonType);
+                //if the filter doesnt exist in the chosenFilters array then add it to the array
+                } else {
+                    theFiltersWithin.push(filterButtonName);  
+                    makeButtonsFor(filterButtonType);
+                }
+            }
+        }
     })
 
     //  Event listener:  click to send login information
