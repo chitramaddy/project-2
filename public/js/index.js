@@ -104,12 +104,6 @@ $(document).ready(function () {
         $("#ingredients-area").empty();
         showChosenIngredients();
 
-
-    })
-
-    //  Event listener:  click to add the selected filters to the filters array.\
-    $("#add-filters").on("click", function() {
-        //take the selected filters and add them to the arrays that they need to go into
     })
 
     //  Event listener:  
@@ -125,14 +119,14 @@ $(document).ready(function () {
         var query = {
             query: $("#query").val().trim()
         };
-        if (chosenIngredients.length > 0) {
+        /*if (chosenIngredients.length > 0) {
             query.ingredients = chosenIngredients;
         }
         if (chosenFilters.length > 0) {
             query.filters = chosenFilters;
-        }
+        }*/
 
-        $.ajax("/recipes", {
+        $.ajax("/recipes/", {
             type: "POST",
             data: query
         }).then(function (response) {
