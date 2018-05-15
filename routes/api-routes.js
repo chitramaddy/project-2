@@ -37,8 +37,29 @@ module.exports = function (app) {
   });
 
   app.post("/recipes/", function (req, res) {
+    //String
     var query = req.body.query;
+
+    //Arrays
     var ingredients = req.body.ingredients;
+    var cuisines = req.body.cuisines;
+    var diets = req.body.diets;
+    var intolerances = req.body.intolerances;
+
+    if (ingredients.length > 0){
+      //go through the array and construct each of the ampersand queries
+    }
+    if (cuisines.length > 0 ){
+      ///go through the array and construct each of the ampersand queries
+    }
+    if (diets.length > 0){
+      //go through the array and construct each of the ampersand queries
+    }
+    if (intolerances.length > 0){
+      ///go through the array and construct each of the ampersand queries
+    }
+    
+
     console.log(query);
     console.log(ingredients);
     request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
