@@ -39,9 +39,14 @@ module.exports = function (app) {
   app.post("/recipes/", function (req, res) {
     //String
     var query = req.body.query;
+    console.log(query);
+    console.log(req.body.ingredients);
+    console.log(req.body.cuisines);
+    console.log(req.body.diets);
+    console.log(req.body.intolerances);
 
     //Arrays
-    var ingredients = req.body.ingredients;
+    /*var ingredients = req.body.ingredients;
     var cuisines = req.body.cuisines;
     var diets = req.body.diets;
     var intolerances = req.body.intolerances;
@@ -57,11 +62,9 @@ module.exports = function (app) {
     }
     if (intolerances.length > 0){
       ///go through the array and construct each of the ampersand queries
-    }
+    }*/
     
-
-    console.log(query);
-    console.log(ingredients);
+    //console.log(ingredients);
     request("http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=" + query,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -86,13 +89,9 @@ module.exports = function (app) {
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
-          var hbsObject = JSON.parse(body);
+          var recipe = JSON.parse(body);
         }
-        //  this is some weird chopping up of the image URL since it only comes as a small size and there arent any options to change it
-        //  get rid of the "90" and then add the correct size in the index.handlebars.... a little hacky but whatever
-        //fixImage(hbsObject);
-        console.log(hbsObject);
-        res.send(hbsObject);
+        res.send(recipe);
       })
   });
 }
