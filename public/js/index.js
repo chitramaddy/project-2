@@ -149,6 +149,7 @@ $(document).ready(function () {
         var filterButtonType = filterButtonClasses.replace("filter-selected", "").replace("filter-button ", "").replace("-button", "");
         //trim off the space at the end (annoying bug)
         filterButtonType = filterButtonType.replace(" ", "");
+        console.log("filterButtonType "+filterButtonType);
         //for loop to go find a match in the corresponding type
         for (var i = 0; i < chosenFilters.length; i++) {
             //to help make it easier to read set chosenType to be the name of the type in the chosenFilters array
@@ -164,7 +165,12 @@ $(document).ready(function () {
                     makeButtonsFor(filterButtonType);
                     //if the filter doesnt exist in the chosenFilters array then add it to the array
                 } else {
+<<<<<<< HEAD
                     theFiltersWithin.push(filterButtonName);
+=======
+                    theFiltersWithin.push(filterButtonName);  
+                    console.log("filterButtonName "+filterButtonName);
+>>>>>>> 36665eddda8401d66fb8ed7daa9d010f1a6693e3
                     makeButtonsFor(filterButtonType);
                 }
             }
