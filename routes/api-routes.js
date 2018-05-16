@@ -42,11 +42,11 @@ module.exports = function (app) {
     console.log(query);    
   
     //query to the api
-    var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=";
+    var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
 
     //if there is query item(for eg: yam fries)
     if (query) {
-      queryURL += query;
+      queryURL +=  "&q=" + query;
     }
 
     //Search based on ingredients for the ingredients keyed in 
