@@ -292,15 +292,6 @@ span.psw {
     background-color: red;
 }
 
-div > #add-fav {
-    text-align: right;
-    color: #ad1400;
-    font-weight: bolder;
-    font-size: 1em;
-    border-top: solid black 1px;
-    background-color: pink;
-}
-
 .ingredient {
     padding: 10px;
 }
