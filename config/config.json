@@ -1,11 +1,7 @@
 {
   "development": {
     "username": "root",
-<<<<<<< HEAD
     "password": "toto",
-=======
-    "password": "root",
->>>>>>> 36665eddda8401d66fb8ed7daa9d010f1a6693e3
     "database": "chef_den_db",
     "host": "127.0.0.1",
     "dialect": "mysql"

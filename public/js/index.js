@@ -63,6 +63,21 @@ function showChosenIngredients() {
     }
 }
 
+function showFilters(){
+    $("#filters-area").empty();
+    for (var i = 0; i < chosenFilters.length; i++){
+        if (chosenFilters[i].filters.length > 0){
+            for (var j = 0; j < chosenFilters[i].filters.length; j++){
+                var thisFilter = chosenFilters[i].filters[j];
+                var button = $("<button>");
+                button.text(cleanSearchValue(thisFilter)).addClass("filter-button fas fa-trash chosen-filter");
+                button.attr("search-value", thisFilter);
+                $("#filters-area").append(button);
+            }
+        }
+    }
+}
+
 
 $(document).ready(function () {
 
@@ -87,7 +102,7 @@ $(document).ready(function () {
     })
 
     //  Event listener: click to close(hide) the modal
-    $(".close").on("click", function () {
+    $("#filters-close").on("click", function () {
         $(".modal").hide();
         showFilters();
     })
@@ -139,7 +154,20 @@ $(document).ready(function () {
 
     })
 
-    //  Event listener:  Add the filter if the filter name is clicked
+    //  Event listener: click to subtract filter from the filters array and remove from main view
+    $("#filters-area").on("click", ".chosen-filter", function() {
+        var searchValue = $(this).attr("search-value");
+        for (var i = 0; i < chosenFilters.length; i++){
+            if(chosenFilters[i].filters.includes(searchValue)){
+                var theFiltersWithin = chosenFilters[i].filters;
+                var indexOfChosenFilter = theFiltersWithin.indexOf(searchValue);
+                    theFiltersWithin.splice(indexOfChosenFilter, 1);
+                    showFilters();
+            }
+        }
+    })
+
+    //  Event listener:  Add the filter if the filter name is clicked, remove it if it already is in the array
     $("#filters-modal").on("click", ".filter-button", function () {
         //take the search value of the button
         var filterButtonName = $(this).attr("search-value");
@@ -149,7 +177,6 @@ $(document).ready(function () {
         var filterButtonType = filterButtonClasses.replace("filter-selected", "").replace("filter-button ", "").replace("-button", "");
         //trim off the space at the end (annoying bug)
         filterButtonType = filterButtonType.replace(" ", "");
-        console.log("filterButtonType "+filterButtonType);
         //for loop to go find a match in the corresponding type
         for (var i = 0; i < chosenFilters.length; i++) {
             //to help make it easier to read set chosenType to be the name of the type in the chosenFilters array
@@ -165,12 +192,7 @@ $(document).ready(function () {
                     makeButtonsFor(filterButtonType);
                     //if the filter doesnt exist in the chosenFilters array then add it to the array
                 } else {
-<<<<<<< HEAD
                     theFiltersWithin.push(filterButtonName);
-=======
-                    theFiltersWithin.push(filterButtonName);  
-                    console.log("filterButtonName "+filterButtonName);
->>>>>>> 36665eddda8401d66fb8ed7daa9d010f1a6693e3
                     makeButtonsFor(filterButtonType);
                 }
             }
@@ -221,6 +243,10 @@ $(document).ready(function () {
         $("#signup-about").val("");
         $("#signup-img-url").val("");
 
+    })
+
+    $("#recipes-modal").on("click", "#add-fav", function() {
+        console.log($(this).attr("recipe-id"));
     })
 
 })
