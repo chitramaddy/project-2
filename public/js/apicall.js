@@ -64,7 +64,21 @@ function renderResults(res) {
 function renderRecipe(res) {
     $("#recipe-section").empty();
 
-    console.log(res);
+    var sourceRecipe = res.source.sourceRecipeUrl;
+
+    var recipeId = res.id;
+    var favoritesDiv = $("<div>");
+    var favDivUl = $("<ul>");
+    var heartLi = $("<li>");
+    var heart = $("<i>");
+    heart.addClass("fas fa-heart fa-3x").attr("recipe-id", recipeId).attr("id", "add-favorite");
+    heartLi.append(heart).attr("id" , "add-fav");
+    var shareLi = $("<li>");
+    var share = $("<i>");
+    share.addClass("fas fa-share-alt-square fa-3x").attr("recipe-id", sourceRecipe).attr("id", "share-favorite");
+    shareLi.append(share).attr("id" , "share-fav");
+    favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
+    favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
 
     var recipeName = res.name;
     var nameDiv = $("<div>");
@@ -89,12 +103,16 @@ function renderRecipe(res) {
     var ingredients = res.ingredientLines;
     var ingredientsDiv = $("<div>");
     var ingredientsHeader = $("<h4>");
-    ingredientsHeader.text("Ingredients:").addClass("recipe-modal-ingredients-header");
+    var smallPTag = $("<p>");
+    smallPTag.text("click the plus to add to shopping list.");
+    ingredientsHeader.text("Ingredients:").addClass("recipe-modal-ingredients-header").append(smallPTag);
     ingredientsDiv.append(ingredientsHeader);
     var ingredientsUl = $("<ul>");
     for (var i = 0; i < ingredients.length; i++) {
         var ingredientLi = $("<li>");
-        ingredientLi.text(ingredients[i]);
+        var fontAwesomePlus = $("<i>");
+        fontAwesomePlus.addClass("fas fa-plus ingredient").attr("ingredient-name", ingredients[i]);
+        ingredientLi.text(ingredients[i]).append(fontAwesomePlus);
         ingredientsUl.addClass("recipe-modal-ingredients-content").append(ingredientLi);
     }
     ingredientsDiv.append(ingredientsUl);
@@ -117,21 +135,12 @@ function renderRecipe(res) {
     timeP.text("Takes about " + totalTime);
     timeDiv.append(timeP);
 
-    var sourceRecipe = res.source.sourceRecipeUrl;
     var sourceDiv = $("<div>");
     var sourceA = $("<a>");
     sourceA.attr("href", sourceRecipe).attr("target", "_blank").text("Click here to get the instructions.");
     sourceDiv.append(sourceA);
 
-    var recipeId = res.id;
-    var favoritesDiv = $("<div>");
-    var headerFav = $("<h3>");
-    headerFav.text("Add this recipe to your favorites.");
-    var heart = $("<i>");
-    heart.addClass("fas fa-heart fa-3x");
-    favoritesDiv.append(heart, headerFav).attr("recipe-id", recipeId).attr("id" , "add-fav");
-
-    $("#recipe-section").append(nameDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv, sourceDiv, favoritesDiv);
+    $("#recipe-section").append(favoritesDiv, nameDiv, imageDiv, typeDiv, ingredientsDiv, servingsDiv, ratingDiv, timeDiv, sourceDiv);
     $("#recipes-modal").show();
 }
 
@@ -155,7 +164,6 @@ $(document).ready(function () {
                     enumerable: true
                 });
             }
-
         }
 
         $.ajax("/recipes/", {

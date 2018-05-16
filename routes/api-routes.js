@@ -7,29 +7,32 @@ var keys = require("../keys");
 var app_id = keys.yummly.app_id;
 var app_key = keys.yummly.app_key;
 
-
 function fixImage(resObject) {
-  for (var i = 0; i < resObject.matches.length; i++) {
-    if (resObject.matches[i].smallImageUrls) {
-      var img = resObject.matches[i].smallImageUrls[0];
-      resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
-      resObject.matches[i].totalTimeInSeconds = resObject.matches[i].totalTimeInSeconds / 60;
+  if (resObject) {
+    for (var i = 0; i < resObject.matches.length; i++) {
+      if (resObject.matches[i].smallImageUrls) {
+        var img = resObject.matches[i].smallImageUrls[0];
+        resObject.matches[i].smallImageUrls = img.slice(0, -2) + "300";
+        resObject.matches[i].totalTimeInSeconds =
+          resObject.matches[i].totalTimeInSeconds / 60;
+      }
     }
+    return resObject;
+  } else {
+    return null;
   }
-  return resObject;
 }
 
-module.exports = function (app) {
-
+module.exports = function(app) {
   //route for creating a user and adding the user to the database
-  app.post("/api/user", function (req, res) {
+  app.post("/api/user", function(req, res) {
     db.User.create({
       email: req.body.email,
       password: req.body.password,
       username: req.body.username,
       img_url: req.body.img_url,
       created_at: req.body.created_at
-    }).then(function (results) {
+    }).then(function(results) {
       // `results` here would be the newly created user
       console.log("added user");
     });
@@ -68,7 +71,7 @@ module.exports = function (app) {
       if (cuisines && cuisines.length > 0) {
         //go through the array and construct each of the ampersand allowedCuisines queries
         for (var i = 0; i < cuisines.length; i++) {
-          queryURL += "&allowedCuisine[]=" + cuisines[i] + "+";
+          queryURL += "&allowedCuisine[]=" + cuisines[i];
         }
         //once the cuisines are added to the queryURL, move on to add Diets
         includeDiet();
@@ -80,7 +83,7 @@ module.exports = function (app) {
       var diets = req.body.diets;
       if (diets && diets.length > 0) {
         for (var i = 0; i < diets.length; i++) {
-          queryURL += "&allowedDiet[]=" + diets[i] + "+";
+          queryURL += "&allowedDiet[]=" + diets[i];
         }
       }
       //once the diets are added to the queryURL, move on to exclude the recipes with allergy items. This is done by adding the allowedAllergy to queryURL 
@@ -91,7 +94,7 @@ module.exports = function (app) {
       var intolerances = req.body.intolerances;
       if (intolerances && intolerances.length > 0) {
         for (var i = 0; i < intolerances.length; i++) {
-          queryURL += "&allowedAllergy[]=" + intolerances[i] + "+";
+          queryURL += "&allowedAllergy[]=" + intolerances[i];
         }
       }
     }
@@ -100,30 +103,36 @@ module.exports = function (app) {
     searchIngredients();
     console.log(queryURL);
 
-    request(queryURL,
-      function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-          //  have to parse the response to JSON
-          var response = JSON.parse(body);
-        }
-        response = fixImage(response);
-        res.send(response);
+    request(queryURL, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        //  have to parse the response to JSON
+        var response = JSON.parse(body);
+      }
+      response = fixImage(response);
+      res.send(response);
 
-        if (!response) {
-          res.send("0 matches found");
-        }
-      })
+      if (!response) {
+        res.send("0 matches found");
+      }
+    });
   });
 
-  app.get("/recipes/:id", function (req, res) {
+  app.get("/recipes/:id", function(req, res) {
     var recipeId = req.params.id;
-    request("http://api.yummly.com/v1/api/recipe/" + recipeId + "?_app_id=" + app_id + "&_app_key=" + app_key,
-      function (error, response, body) {
+    request(
+      "http://api.yummly.com/v1/api/recipe/" +
+        recipeId +
+        "?_app_id=" +
+        app_id +
+        "&_app_key=" +
+        app_key,
+      function(error, response, body) {
         if (!error && response.statusCode === 200) {
           //  have to parse the response to JSON
           var recipe = JSON.parse(body);
         }
         res.send(recipe);
-      })
+      }
+    );
   });
-}
+};
