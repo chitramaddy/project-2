@@ -38,33 +38,35 @@ module.exports = function (app) {
   app.post("/recipes/", function (req, res) {
     //String
     var query = req.body;
-    console.log(query);
     var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key + "&q=";
-    // //Arrays
-    var ingredients = query.ingredients;
-    // var intolerances = req.body.intolerances;
+
     function searchIngredients() {
+      var ingredients = req.body.ingredients;
+      console.log(ingredients);
       if (ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
           queryURL += ingredients[i] + "+";
         }
+        console.log(queryURL);
       }
       includeCuisines();
     }
 
     function includeCuisines() {
-      var cuisines = query.cuisines;
+      var cuisines = req.body.cuisines;
+      console.log(cuisines);
       if (cuisines.length > 0) {
         for (var i = 0; i < cuisines.length; i++) {
           queryURL += "&allowedCuisine[]=" + cuisines[i] + "+";
         }
+        console.log(queryURL)
         includeDiet();
       }
     }
 
     function includeDiet() {
-      var diets = query.diets;
+      var diets = req.body.diets;
       if (diets.length > 0) {
         for (var i = 0; i < diets.length; i++) {
           queryURL += "&allowedDiet[]=" + diets[i] + "+";
@@ -74,15 +76,17 @@ module.exports = function (app) {
     }
 
     function excludeAllergies() {
-      var intolerances = query.intolerances;
+      var intolerances = req.body.intolerances;
       if (intolerances.length > 0) {
         for (var i = 0; i < intolerances.length; i++) {
           queryURL += "&allowedAllergy[]=" + intolerances[i] + "+";
         }
       }
     }
+
     searchIngredients();
     console.log(queryURL);
+
     request(queryURL,
       function (error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -92,7 +96,7 @@ module.exports = function (app) {
         response = fixImage(response);
         res.send(response);
 
-        if(!response){
+        if (!response) {
           res.send("0 matches found");
         }
       })
