@@ -12,14 +12,13 @@ var filters = [{
     }
 ];
 
-var chosenFilters = [
-    {
+var chosenFilters = [{
         name: "cuisines",
         filters: []
     },
     {
         name: "diets",
-        filters: []  
+        filters: []
     },
     {
         name: "intolerances",
@@ -137,46 +136,46 @@ function renderRecipe(res) {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-        //  Event listener:  click to search for the query and arrays if they exist.   Sends ajax call to api/recipes route and returns an object
-        $("#search-button").on("click", function (event) {
-            event.preventDefault();
-    
-            var query = {
-                query: $("#query").val().trim()
-            };
-            if (chosenIngredients.length > 0) {
-                query.ingredients = chosenIngredients;
+    //  Event listener:  click to search for the query and arrays if they exist.   Sends ajax call to api/recipes route and returns an object
+    $("#search-button").on("click", function (event) {
+        event.preventDefault();
+
+        var query = {
+            query: $("#query").val().trim()
+        };
+        if (chosenIngredients.length > 0) {
+            query.ingredients = chosenIngredients;
+        }
+        for (var i = 0; i < chosenFilters.length; i++) {
+            if (chosenFilters[i].filters.length > 0) {
+                Object.defineProperty(query, chosenFilters[i].name, {
+                    value: chosenFilters[i].filters,
+                    enumerable: true
+                });
             }
-            for (var i = 0; i < chosenFilters.length; i++){
-                if (chosenFilters[i].filters.length > 0){
-                    Object.defineProperty(query, chosenFilters[i].name, {
-                        value: chosenFilters[i].filters,
-                        enumerable: true
-                      });
-                }
 
-            }
-    
-            $.ajax("/recipes/", {
-                type: "POST",
-                data: query
-            }).then(function (response) {
-                renderResults(response);
-            });
-            $("#query").val("");
-        })
+        }
 
-        $("#results-area").on("click", "ul", function (){
-            var recipeId = $(this).attr("recipe-id");
-    
-            $.ajax(("/recipes/" + recipeId), {
-                type: "GET"
-            }).then(function (response) {
-                renderRecipe(response);
-            })
+        $.ajax("/recipes/", {
+            type: "POST",
+            data: query
+        }).then(function (response) {
+            renderResults(response);
+        });
+        $("#query").val("");
+    })
+
+    $("#results-area").on("click", "ul", function () {
+        var recipeId = $(this).attr("recipe-id");
+
+        $.ajax(("/recipes/" + recipeId), {
+            type: "GET"
+        }).then(function (response) {
+            renderRecipe(response);
         })
+    })
 
 
 
