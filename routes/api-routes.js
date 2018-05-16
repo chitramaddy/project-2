@@ -43,7 +43,7 @@ module.exports = function (app) {
     function searchIngredients() {
       var ingredients = req.body.ingredients;
       console.log(ingredients);
-      if (ingredients.length > 0) {
+      if (ingredients && ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
           queryURL += ingredients[i] + "+";
@@ -56,7 +56,7 @@ module.exports = function (app) {
     function includeCuisines() {
       var cuisines = req.body.cuisines;
       console.log(cuisines);
-      if (cuisines.length > 0) {
+      if (cuisines && cuisines.length > 0) {
         for (var i = 0; i < cuisines.length; i++) {
           queryURL += "&allowedCuisine[]=" + cuisines[i] + "+";
         }
@@ -67,7 +67,7 @@ module.exports = function (app) {
 
     function includeDiet() {
       var diets = req.body.diets;
-      if (diets.length > 0) {
+      if (diets && diets.length > 0) {
         for (var i = 0; i < diets.length; i++) {
           queryURL += "&allowedDiet[]=" + diets[i] + "+";
         }
@@ -77,7 +77,7 @@ module.exports = function (app) {
 
     function excludeAllergies() {
       var intolerances = req.body.intolerances;
-      if (intolerances.length > 0) {
+      if (intolerances && intolerances.length > 0) {
         for (var i = 0; i < intolerances.length; i++) {
           queryURL += "&allowedAllergy[]=" + intolerances[i] + "+";
         }
