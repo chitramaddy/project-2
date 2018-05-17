@@ -19,13 +19,12 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false
             }
         });
+        cart.hasMany(models.Favorite, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
     };
-
-    cart.hasMany(models.Favorite, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
 
     return cart;
 };
