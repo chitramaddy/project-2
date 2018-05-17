@@ -124,6 +124,7 @@ module.exports = function (app) {
     }
   });
 
+  //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
     //String
     var query = req.body;
