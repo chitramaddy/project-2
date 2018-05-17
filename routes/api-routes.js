@@ -102,6 +102,7 @@ module.exports = function(app) {
     //Calling the function that begins the building of queryURL. This basically search for ingredients.
     searchIngredients();
     console.log(queryURL);
+    console.log("hello");
 
     request(queryURL, function(error, response, body) {
       if (!error && response.statusCode === 200) {
