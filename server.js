@@ -5,7 +5,7 @@ var db = require("./models");
 //  Set up express app
 //=========================================
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 //=========================================
 
 
@@ -30,8 +30,9 @@ app.set("view engine", "handlebars");
 
 
 // Import routes and give the server access to them.
-var routes = require("./routes/html-routes.js")(app);
-var routes = require("./routes/api-routes.js")(app);
+require("./routes/html-routes.js")(app);
+require("./routes/api-routes.js")(app);
+require("./routes/cart-routes.js")(app);
 
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync({}).then(function(){
