@@ -292,6 +292,8 @@ span.psw {
     background-color: red;
 }
 
+<<<<<<< HEAD
+=======
 div > #add-fav {
     text-align: right;
     color: #ad1400;
@@ -314,6 +316,7 @@ div > #add-fav {
     border-color: #420C3B;
     color: #420C3B;
 }
+>>>>>>> d7c3217afe86a84f0ef043ac59eb6b6646bfbbb2
 .ingredient {
     padding: 10px;
 }

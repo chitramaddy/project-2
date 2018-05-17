@@ -64,6 +64,8 @@ function renderResults(res) {
 function renderRecipe(res) {
     $("#recipe-section").empty();
 
+    var image = res.images[0].hostedLargeUrl;
+    var recipeName = res.name;
     var sourceRecipe = res.source.sourceRecipeUrl;
 
     var recipeId = res.id;
@@ -71,7 +73,11 @@ function renderRecipe(res) {
     var favDivUl = $("<ul>");
     var heartLi = $("<li>");
     var heart = $("<i>");
-    heart.addClass("fas fa-heart fa-3x").attr("recipe-id", recipeId).attr("id", "add-favorite");
+    heart.addClass("fas fa-heart fa-3x")
+    .attr("recipe-id", recipeId)
+    .attr("id", "add-favorite")
+    .attr("image", image)
+    .attr("recipe-name", recipeName);
     heartLi.append(heart).attr("id" , "add-fav");
     var shareLi = $("<li>");
     var share = $("<i>");
@@ -80,13 +86,11 @@ function renderRecipe(res) {
     favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
     favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
 
-    var recipeName = res.name;
     var nameDiv = $("<div>");
     var nameH = $("<h4>");
     nameH.text(recipeName);
     nameDiv.append(nameH).addClass("recipe-name");
 
-    var image = res.images[0].hostedLargeUrl;
     var imageDiv = $("<div>");
     var img = $("<img>");
     img.attr("src", image);
