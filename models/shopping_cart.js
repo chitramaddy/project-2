@@ -1,26 +1,14 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var cart = sequelize.define("Cart", {
-        shopping: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
-        },
-        body: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            len: [1]
-        }, 
         recipeId: {
-            type: DataTypes.INTEGER
-        }, 
+            type: DataTypes.STRING
+        },
         ingredientName: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         qty: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         }
     });
@@ -33,5 +21,11 @@ module.exports = function(sequelize, DataTypes) {
         });
     };
 
-  return cart;  
+    cart.hasMany(models.Favorite, {
+        foreignKey: {
+            allowNull: false
+        }
+    });
+
+    return cart;
 };
