@@ -104,35 +104,36 @@ module.exports = function (app) {
   });
 
   // Route for logging user out
-    app.get("/logout", function (req, res) {
+  app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
   });
 
   app.get("/api/user_data", function (req, res) {
-  if (!req.user) {
-    // The user is not logged in, send back an empty object
-    res.json({});
-  } else {
-    // Otherwise send back the user's email and id
-    // Sending back a password, even a hashed password, isn't a good idea
-    res.json({
-      email: req.user.email,
-      id: req.user.id,
-      photo: req.user.photo
-    });
-  }
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      // Otherwise send back the user's email and id
+      // Sending back a password, even a hashed password, isn't a good idea
+      res.json({
+        email: req.user.email,
+        id: req.user.id,
+        photo: req.user.photo
+      });
+    }
   });
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
-  
+
     //query to the api
-    var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
+    var queryURL = "http://api.yummly.com/v1/api/recipes?&_app_id=" + app_id + "&_app_key=" + app_key;
 
     //if there is query item(for eg: yam fries)
-    if (req.body.query) {
-      queryURL +=  "&q=" + query;
+    var query = req.body.query;
+    if (query) {
+      queryURL += "&q=" + query;
     }
 
     //Search based on ingredients for the ingredients keyed in 
@@ -141,7 +142,7 @@ module.exports = function (app) {
       if (ingredients && ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
-          queryURL +=  "&allowedIngredient[]=" + ingredients[i] + "+";
+          queryURL += "&allowedIngredient[]=" + ingredients[i] + "+";
         }
       }
       //once the ingredients are added to the queryURL, move to add cuisines
@@ -185,7 +186,6 @@ module.exports = function (app) {
     //Calling the function that begins the building of queryURL. This basically search for ingredients.
     searchIngredients();
     console.log(queryURL);
-    console.log("hello");
 
     request(queryURL, function (error, response, body) {
       if (!error && response.statusCode === 200) {
@@ -220,5 +220,3 @@ module.exports = function (app) {
     );
   });
 }
-
-  

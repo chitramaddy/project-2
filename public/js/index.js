@@ -118,7 +118,7 @@ $(document).ready(function () {
     });
 
     //  Event listener:  click to close modal when cancel is clicked
-    $(".cancelbtn").on("click", function () {
+    $(".cancel").on("click", function () {
         $(".modal").hide();
     })
 
@@ -200,7 +200,7 @@ $(document).ready(function () {
     })
 
     //  Event listener:  click to send login information
-    $("#login").on("click", function (event) {
+    $("#login-button").on("click", function (event) {
         event.preventDefault();
         var loginInfo = {
             username: $("#login-username").val().trim(),
