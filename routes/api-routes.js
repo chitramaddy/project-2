@@ -104,11 +104,9 @@ module.exports = function (app) {
   });
 
   // Route for logging user out
-    app.get("/logout", function (req, res) {
+  app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
-  });
-
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -121,17 +119,18 @@ module.exports = function (app) {
         photo: req.user.photo
       });
     }
-  };
+  });
+
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
-  
+
     //query to the api
     var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
 
     //if there is query item(for eg: yam fries)
     if (query) {
-      queryURL +=  "&q=" + query;
+      queryURL += "&q=" + query;
     }
 
     //Search based on ingredients for the ingredients keyed in 
@@ -140,7 +139,7 @@ module.exports = function (app) {
       if (ingredients && ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
-          queryURL +=  "&allowedIngredient[]=" + ingredients[i] + "+";
+          queryURL += "&allowedIngredient[]=" + ingredients[i] + "+";
         }
       }
       //once the ingredients are added to the queryURL, move to add cuisines
@@ -219,4 +218,3 @@ module.exports = function (app) {
     );
   });
 };
-  
