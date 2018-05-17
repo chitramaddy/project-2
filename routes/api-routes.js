@@ -131,7 +131,7 @@ module.exports = function (app) {
     var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
 
     //if there is query item(for eg: yam fries)
-    if (query) {
+    if (req.body.query) {
       queryURL +=  "&q=" + query;
     }
 

@@ -169,7 +169,7 @@ $(document).ready(function () {
                 });
             }
         }
-
+        console.log(query);
         $.ajax("/recipes/", {
             type: "POST",
             data: query
