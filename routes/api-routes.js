@@ -107,20 +107,22 @@ module.exports = function (app) {
   app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id,
-        photo: req.user.photo
-      });
-    }
   });
 
+  app.get("/api/user_data", function (req, res) {
+  if (!req.user) {
+    // The user is not logged in, send back an empty object
+    res.json({});
+  } else {
+    // Otherwise send back the user's email and id
+    // Sending back a password, even a hashed password, isn't a good idea
+    res.json({
+      email: req.user.email,
+      id: req.user.id,
+      photo: req.user.photo
+    });
+  }
+  });
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
@@ -129,8 +131,8 @@ module.exports = function (app) {
     var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
 
     //if there is query item(for eg: yam fries)
-    if (query) {
-      queryURL += "&q=" + query;
+    if (req.body.query) {
+      queryURL +=  "&q=" + query;
     }
 
     //Search based on ingredients for the ingredients keyed in 
@@ -217,4 +219,6 @@ module.exports = function (app) {
       }
     );
   });
-};
+}
+
+  
