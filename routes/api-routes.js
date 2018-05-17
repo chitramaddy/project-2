@@ -218,5 +218,3 @@ module.exports = function (app) {
       }
     );
   });
-};
-  
