@@ -301,6 +301,19 @@ div > #add-fav {
     background-color: pink;
 }
 
+.home-button {
+    width: auto;
+    padding: 10px 18px;
+    border-color: #420C3B;
+    color: #420C3B;
+}
+
+#favorite-button {
+    width:auto;
+    padding: 10px 18px;
+    border-color: #420C3B;
+    color: #420C3B;
+}
 .ingredient {
     padding: 10px;
 }

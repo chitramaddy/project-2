@@ -109,7 +109,6 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.get("/api/user_data", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -122,44 +121,46 @@ module.exports = function (app) {
         photo: req.user.photo
       });
     }
-  });
+  };
 
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
-    //String
-    var query = req.body;
-    var queryURL =
-      "http://api.yummly.com/v1/api/recipes?&maxResult=20&_app_id=" +
-      app_id +
-      "&_app_key=" +
-      app_key +
-      "&q=";
+  
+    //query to the api
+    var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + app_id + "&_app_key=" + app_key;
 
+    //if there is query item(for eg: yam fries)
+    if (query) {
+      queryURL +=  "&q=" + query;
+    }
+
+    //Search based on ingredients for the ingredients keyed in 
     function searchIngredients() {
       var ingredients = req.body.ingredients;
-      console.log(ingredients);
       if (ingredients && ingredients.length > 0) {
         //go through the array and construct each of the ampersand queries
         for (var i = 0; i < ingredients.length; i++) {
-          queryURL += ingredients[i] + "+";
+          queryURL +=  "&allowedIngredient[]=" + ingredients[i] + "+";
         }
-        console.log(queryURL);
       }
+      //once the ingredients are added to the queryURL, move to add cuisines
       includeCuisines();
     }
 
+    //search based on cuisines if the cuisine filters were selected
     function includeCuisines() {
       var cuisines = req.body.cuisines;
-      console.log(cuisines);
       if (cuisines && cuisines.length > 0) {
+        //go through the array and construct each of the ampersand allowedCuisines queries
         for (var i = 0; i < cuisines.length; i++) {
           queryURL += "&allowedCuisine[]=" + cuisines[i];
         }
-        console.log(queryURL);
+        //once the cuisines are added to the queryURL, move on to add Diets
         includeDiet();
       }
     }
 
+    //search based on Diets if the diet filters were selected
     function includeDiet() {
       var diets = req.body.diets;
       if (diets && diets.length > 0) {
@@ -167,6 +168,7 @@ module.exports = function (app) {
           queryURL += "&allowedDiet[]=" + diets[i];
         }
       }
+      //once the diets are added to the queryURL, move on to exclude the recipes with allergy items. This is done by adding the allowedAllergy to queryURL 
       excludeAllergies();
     }
 
@@ -179,8 +181,10 @@ module.exports = function (app) {
       }
     }
 
+    //Calling the function that begins the building of queryURL. This basically search for ingredients.
     searchIngredients();
     console.log(queryURL);
+    console.log("hello");
 
     request(queryURL, function (error, response, body) {
       if (!error && response.statusCode === 200) {
@@ -215,4 +219,4 @@ module.exports = function (app) {
     );
   });
 
-};
+});
