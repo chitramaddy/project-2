@@ -4,10 +4,13 @@ var db = require("../models");
 var passport = require("../config/passport");
 var request = require("request");
 var keys = require("../keys");
+var path = require("path");
 
 // import formidable
 var formidable = require('formidable');
 var cloudinary = require('cloudinary');
+// Requiring our custom middleware for checking if a user is logged in
+var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 var app_id = keys.yummly.app_id;
 var app_key = keys.yummly.app_key;
@@ -123,5 +126,19 @@ module.exports = function (app) {
 			});
 		}
 	});
+
+	//==============================
+	//html routes for user auth process
+
+	//===============================
+
+	//This is the 
+	app.get("/", function (req, res) {
+    // If the user already has an account send them to the favorites page
+    if (req.user) {
+      return res.redirect("/favorites");
+    }
+    
+  });
 
 }
