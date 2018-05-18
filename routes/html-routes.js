@@ -35,27 +35,27 @@ module.exports = function (app) {
 
   //user profile routes. 
 
-  //to show the user when user clicks on show profile. Writing this as api route for checking. eventually this needs to be written as html route
-  app.get("/api/user/:id", function (req, res) {
+  //to show the user when user clicks on show profile. 
+  app.get("/user/:id", function (req, res) {
     db.User.findOne({
       where: {
         id: req.params.id
       }
-    }).then(function (dbUser) {
-      res.json(dbUser);
+    }).then(function (user) {
+      res.render("favorites", {user: user});
     });
   });
 
-  //To update an user information. Writing this as api route for checking. eventually this needs to be written as html route
-  app.put("/api/user", function (req, res){
+  //To update an user information. 
+  app.put("/user/:id", function (req, res){
     db.User.update(req.body, 
       {
       where:{
         id: req.body.id
       }
     })
-    .then (function(dbUser){
-      res.json(dbUser);
+    .then (function(user){
+      res.render("favorites", user);
     })
   })
 
@@ -65,8 +65,8 @@ module.exports = function (app) {
       where: {
         id: req.params.id
       }
-    }).then(function (dbUser) {
-      res.json(dbUser);
+    }).then(function (user) {
+      res.json("id: "+res.insertId);
     });
   })
 
