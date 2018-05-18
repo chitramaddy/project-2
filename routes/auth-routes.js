@@ -132,12 +132,26 @@ module.exports = function (app) {
 
 	//===============================
 
-	//This is the 
 	app.get("/", function (req, res) {
     // If the user already has already logged in, send them to the favorites page
     if (req.user) {
       return res.redirect("/favorites");
+	}
+	res.render("index");
+  });
+
+  app.get("/login", function (req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      return res.redirect("/favorites");
     }
+	res.render("index");
+  });
+
+  // Here we've add our isAuthenticated middleware to this route.
+  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+  app.get("/members", isAuthenticated, function (req, res) {
+	res.render("/favorites");
   });
 
 }
