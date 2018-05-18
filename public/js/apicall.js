@@ -74,15 +74,15 @@ function renderRecipe(res) {
     var heartLi = $("<li>");
     var heart = $("<i>");
     heart.addClass("fas fa-heart fa-3x")
-    .attr("recipe-id", recipeId)
-    .attr("id", "add-favorite")
-    .attr("image", image)
-    .attr("recipe-name", recipeName);
-    heartLi.append(heart).attr("id" , "add-fav");
+        .attr("recipe-id", recipeId)
+        .attr("id", "add-favorite")
+        .attr("image", image)
+        .attr("recipe-name", recipeName);
+    heartLi.append(heart).attr("id", "add-fav");
     var shareLi = $("<li>");
     var share = $("<i>");
     share.addClass("fas fa-share-alt-square fa-3x").attr("recipe-id", sourceRecipe).attr("id", "share-favorite");
-    shareLi.append(share).attr("id" , "share-fav");
+    shareLi.append(share).attr("id", "share-fav");
     favDivUl.addClass("fav-div-properties").append(heartLi, shareLi);
     favoritesDiv.append(favDivUl).attr("id", "fav-share-section");
 
@@ -115,7 +115,10 @@ function renderRecipe(res) {
     for (var i = 0; i < ingredients.length; i++) {
         var ingredientLi = $("<li>");
         var fontAwesomePlus = $("<i>");
-        fontAwesomePlus.addClass("fas fa-plus ingredient").attr("ingredient-name", ingredients[i]);
+        fontAwesomePlus.addClass("fas fa-plus ingredient")
+            .attr("ingredient-name", ingredients[i])
+            .attr("recipe-id", recipeId)
+            .attr("qty", "1");
         ingredientLi.text(ingredients[i]).append(fontAwesomePlus);
         ingredientsUl.addClass("recipe-modal-ingredients-content").append(ingredientLi);
     }
@@ -169,12 +172,16 @@ $(document).ready(function () {
                 });
             }
         }
-        console.log(query);
         $.ajax("/recipes/", {
             type: "POST",
             data: query
         }).then(function (response) {
-            renderResults(response);
+            if (response.matches.length > 0) {
+                renderResults(response);
+            } else {
+                console.log("there aren't any results");
+            }
+
         });
         $("#query").val("");
     })
@@ -186,6 +193,20 @@ $(document).ready(function () {
             type: "GET"
         }).then(function (response) {
             renderRecipe(response);
+        })
+    })
+
+    $("#recipes-modal").on("click", ".ingredient", function() {
+        var newCartItem = {
+            id: $(this).attr("recipe-id"), 
+            name: $(this).attr("ingredient-name"),
+            qty: $(this).attr("qty")
+        }
+        $.ajax("/api/cart/", {
+            type: "POST",
+            data: newCartItem
+        }).then(function(response){
+            console.log(response);
         })
     })
 
