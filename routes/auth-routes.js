@@ -134,11 +134,10 @@ module.exports = function (app) {
 
 	//This is the 
 	app.get("/", function (req, res) {
-    // If the user already has an account send them to the favorites page
+    // If the user already has already logged in, send them to the favorites page
     if (req.user) {
       return res.redirect("/favorites");
     }
-    
   });
 
 }
