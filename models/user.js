@@ -35,8 +35,19 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         }
-        
+
     });
+
+
+    User.associate = function (models) {
+        User.hasMany(models.Favorite, {
+            through: {
+                model: userfavs
+            }
+        });
+
+    }
+
 
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);

@@ -7,8 +7,8 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-       recipe_img: {
-        type: DataTypes.STRING,
+        recipe_img: {
+            type: DataTypes.STRING,
         },
         review: {
             type: DataTypes.TEXT,
@@ -22,23 +22,22 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
         },
         recipe_id: {
-            type:DataTypes.STRING
-        }, 
+            type: DataTypes.STRING
+        },
         recipe_title: {
             type: DataTypes.TEXT
         }
     });
 
     Favorite.associate = function (models) {
-        Favorite.hasMany(models.Favorite, {
-            onDelete: "cascade"
-        });
-        Favorite.belongsTo(models.User, {
-            foreignKey: {
-                allowNull: false
+        Favorite.hasMany(models.User, {
+            through: {
+                model: userfavs
             }
         });
-    };
+
+    }
+
 
     return Favorite;
 };
