@@ -1,6 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var db = require("./models");
+var session = require("express-session");
+var passport = require("./config/passport");
 
 //  Set up express app
 //=========================================
@@ -19,7 +21,9 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 //=========================================
-
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //  Set up handlebars
 //=========================================

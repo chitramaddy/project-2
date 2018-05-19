@@ -38,10 +38,6 @@ module.exports = function (sequelize, DataTypes) {
         
     });
 
-    // cart.hasMany(models.User, {
-    //     onDelete: "cascade"
-    // });
-
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };

@@ -43,13 +43,15 @@ module.exports = function (app) {
         id: req.params.id
       }
     }).then(function (user) {
-      console.log(user.datavalues);
-      // var hbsObject = {
-      //   userName: res.body.userName,
-      //   email: res.body.email,
-      //   img_url: res.body.img_url
-      // }
-      res.render("favorite", user);
+      console.log(user.dataValues);
+      var data = user.dataValues;
+       var hbsObject = {
+         userName: data.userName,
+         email: data.email,
+         img_url: data.img_url,
+         password: data.password
+       }
+      res.render("favorite", hbsObject);
     });
   });
 
