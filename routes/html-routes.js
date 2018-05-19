@@ -37,12 +37,19 @@ module.exports = function (app) {
 
   //to show the user when user clicks on show profile. 
   app.get("/user/:id", function (req, res) {
+   
     db.User.findOne({
       where: {
         id: req.params.id
       }
     }).then(function (user) {
-      res.render("favorites", {user: user});
+      console.log(user.datavalues);
+      // var hbsObject = {
+      //   userName: res.body.userName,
+      //   email: res.body.email,
+      //   img_url: res.body.img_url
+      // }
+      res.render("favorite", user);
     });
   });
 
@@ -55,7 +62,7 @@ module.exports = function (app) {
       }
     })
     .then (function(user){
-      res.render("favorites", user);
+      res.render("favorite", user);
     })
   })
 
