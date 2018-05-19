@@ -141,7 +141,7 @@ module.exports = function (app) {
   });
 
   app.get("/login", function (req, res) {
-    // If the user already has an account send them to the members page
+    // If the user already has an account send them to the favorites page
     if (req.user) {
       return res.redirect("/favorites");
     }
@@ -150,8 +150,11 @@ module.exports = function (app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, function (req, res) {
-	res.render("/favorites");
+  app.get("/favorites", isAuthenticated, function (req, res) {
+	  db.Favorites.findAll().then(function(favorites){
+		res.render("/favorites");
+	  });
+	
   });
 
 }

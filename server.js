@@ -1,6 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var db = require("./models");
+var session = require("express-session");
+var passport = require("./config/passport");
 
 //  Set up express app
 //=========================================
@@ -19,7 +21,9 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 //=========================================
-
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //  Set up handlebars
 //=========================================
@@ -33,6 +37,7 @@ app.set("view engine", "handlebars");
 require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/cart-routes.js")(app);
+require("./routes/auth-routes.js")(app);
 
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync({}).then(function(){
