@@ -219,6 +219,7 @@ module.exports = function (app) {
       }
     );
   });
+  });
 
   app.post("/api/cart/", function (req, res) {
     var newCartItem = {
