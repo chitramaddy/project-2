@@ -84,7 +84,7 @@ module.exports = function (app) {
           userName: fields.userName,
           email: fields.email,
           password: fields.password,
-        }).then(function () {
+        }).then(function (userInfo) {
           // Upon successful signup, log user in
           req.login(userInfo, function (err) {
             if (err) {
