@@ -1,3 +1,5 @@
+var userfavs = require("./userfavs");
+
 module.exports = function (sequelize, DataTypes) {
     var Favorite = sequelize.define("Favorite", {
         fav: {
@@ -19,25 +21,25 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
         },
         foreignKey: {
-            type: DataTypes.STRING,
+            type:DataTypes.STRING
         },
         recipe_id: {
             type: DataTypes.STRING
-        },
-        recipe_title: {
-            type: DataTypes.TEXT
         }
+        // recipe_title: {
+        //     type: DataTypes.TEXT
+        // }
     });
 
     Favorite.associate = function (models) {
-        Favorite.hasMany(models.User, {
-            through: {
-                model: userfavs
+        Favorite.belongsTo(models.User, {
+            // through: {
+            //     model: userfavs
+            // }
+            foreignKey: {
+                allowNull: false
             }
         });
-
     }
-
-
     return Favorite;
 };

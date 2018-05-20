@@ -229,6 +229,7 @@ $(document).ready(function () {
             about: $("#signup-about").val().trim(),
             img_url: $("#signup-img-url").val().trim()
         }
+        console.log(newUser);
         $.ajax("/api/user", {
             type: "POST",
             data: newUser

@@ -1,4 +1,5 @@
 var bcrypt = require("bcrypt-nodejs");
+var userfavs = require("./userfavs");
 
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
@@ -38,14 +39,12 @@ module.exports = function (sequelize, DataTypes) {
 
     });
 
-
     User.associate = function (models) {
         User.hasMany(models.Favorite, {
-            through: {
-                model: userfavs
-            }
+            // through: {
+            //     model: userfavs
+            // }
         });
-
     }
 
 
