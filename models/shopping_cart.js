@@ -13,6 +13,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     });
+<<<<<<< HEAD
 
     cart.associate = function (models) {
         cart.belongsTo(models.User, {
@@ -27,5 +28,9 @@ module.exports = function (sequelize, DataTypes) {
         });
     };
     
+=======
+ 
+
+>>>>>>> 98cf5ba9c5cea52fbb243421a77a97d8c6e343c2
     return cart;
 };
