@@ -16,6 +16,7 @@ var cloudname = keys.cloudinary.cloudname;
 var cloudapi_key = keys.cloudinary.api_key;
 var cloudapi_secret = keys.cloudinary.api_secret;
 
+
 function fixImage(resObject) {
   if (resObject) {
     for (var i = 0; i < resObject.matches.length; i++) {
@@ -33,6 +34,7 @@ function fixImage(resObject) {
 }
 
 module.exports = function (app) {
+
   //this is the route the ajax request will hit to make a request to the api for recipes
   app.post("/recipes/", function (req, res) {
 
@@ -128,6 +130,15 @@ module.exports = function (app) {
       }
     );
   });
+
+  app.get("/favorite", function (req, res){
+    var userfav = {
+      id: req.body.id
+    }
+    db.favorites.findOne(userfav).then(function(data){
+      console.log(data);
+    })
+  })
 
   app.post("/api/cart/", function (req, res) {
     var newCartItem = {

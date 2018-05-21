@@ -38,10 +38,19 @@ function fixImage(resObject) {
 module.exports = function (app) {
 
 	app.post("/api/login", passport.authenticate("local"), function (req, res) {
-		//So we're sending back the route to the favorites page because the redirect will happen on the front end
+		//So we're sending back the route to the favorite page because the redirect will happen on the front end
 		// They won't get this or even be able to access this page if they aren't authed
-		console.log(req.user);
-		res.json("/favorites");
+		console.log(req.user.dataValues);
+		var data = req.user.dataValues
+		var hbsInfo = {
+			email: data.email,
+			userName: data.username,
+			about: data.about,
+			img_url: data.img_url,
+			like_dislike: data.like_dislike
+		}
+
+		res.render("favorite", hbsInfo);
 	});
 
 	//route for creating a user and adding the user to the database
@@ -62,11 +71,6 @@ module.exports = function (app) {
 						email: fields.email,
 						password: fields.password,
 						photo: result.secure_url
-						// email: req.body.email,
-						// password: req.body.password,
-						// username: req.body.username,
-						// img_url: req.body.img_url,
-						// created_at: req.body.created_at
 					}).then(function (userInfo) {
 						// Upon successful signup, log user in
 						req.login(userInfo, function (err) {
@@ -75,7 +79,7 @@ module.exports = function (app) {
 								return res.status(422).json(err);
 							}
 							console.log(req.user);
-							res.json("/favorites");
+							res.json("favorite", userInfo);
 						});
 					}).catch(function (err) {
 						console.log(err)
@@ -94,8 +98,13 @@ module.exports = function (app) {
 							console.log(err)
 							return res.status(422).json(err);
 						}
-						console.log(req.user);
-						return res.json("/favorites");
+						console.log(JSON.stringify(userInfo));
+						var hbsInfo = {
+							userName: (JSON.stringify(userInfo)).userName,
+							email: (JSON.stringify(userInfo)).email,
+							about: (JSON.stringify(userInfo)).about
+						}
+						return res.render("favorite", hbsInfo);
 					});
 				}).catch(function (err) {
 					console.log(err);
@@ -133,17 +142,17 @@ module.exports = function (app) {
 	//===============================
 
 	app.get("/", function (req, res) {
-    // If the user already has already logged in, send them to the favorites page
+    // If the user already has already logged in, send them to the favorite page
     if (req.user) {
-      return res.redirect("/favorites");
+      return res.redirect("/favorite");
 	}
 	res.render("index");
   });
 
   app.get("/login", function (req, res) {
-    // If the user already has an account send them to the favorites page
+    // If the user already has an account send them to the favorite page
     if (req.user) {
-      return res.redirect("/favorites");
+      return res.redirect("/favorite");
     }
 	res.render("index");
   });
@@ -151,8 +160,8 @@ module.exports = function (app) {
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
   app.get("/favorites", isAuthenticated, function (req, res) {
-	  db.Favorites.findAll().then(function(favorites){
-		res.render("/favorites");
+	  db.favorites.findAll().then(function(favorite){
+		res.render("favorite", user);
 	  });
 	
   });
