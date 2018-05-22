@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var db = require("./models");
 var session = require("express-session");
 var passport = require("./config/passport");
+var path = require("path");
 
 //  Set up express app
 //=========================================
@@ -18,7 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 // Static directory
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "./public")));
+//app.use(express.static("public"));
 
 //=========================================
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));

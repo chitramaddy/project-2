@@ -226,8 +226,8 @@ $(document).ready(function () {
             userName: userName,
             password: password
         }).then(function(data){
-            console.log("Ajax post: "+data);
-            window.location.assign("favorite", data);
+            $("#login-modal").hide();
+            window.location.assign("/favorite/" + data.id);
         }).catch(function(err){
             console.log(err);
         });

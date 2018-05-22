@@ -12,6 +12,7 @@ module.exports = function (app) {
   });
 
   //route for displaying favorites page
+  /*
   app.get("api/favorites", function (req, res) {
     db.Favorite.findAll({})
       .then(function (dbFavorite) {
@@ -19,8 +20,10 @@ module.exports = function (app) {
       });
 
   });
+  */
 
   //to delete a favorited item
+  /*
   app.delete("/api/favorites/:id", function (req, res) {
     db.Favorite.destroy({
       where: {
@@ -30,6 +33,7 @@ module.exports = function (app) {
       res.json(dbFavorite);
     });
   });
+  */
 
   //========================================
 
@@ -89,4 +93,16 @@ module.exports = function (app) {
     })
   });
 
+  app.get("/favorite/:id", function (req, res) {
+    var user = {
+      id: req.params.id
+    }
+    db.User.findOne(user).then(function(data){
+      var hbsObject = {
+        data: data.dataValues
+      }
+      res.render("favorite", hbsObject);
+    })
+  });
+  
 };
