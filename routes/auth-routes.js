@@ -3,6 +3,7 @@ require("dotenv").config();
 var db = require("../models");
 var passport = require("../config/passport");
 var request = require("request");
+var express = require("express");
 var keys = require("../keys");
 var path = require("path");
 
@@ -23,7 +24,13 @@ cloudinary.config({
 	cloud_name: cloudname,
 	api_key: cloudapi_key,
 	api_secret: cloudapi_secret
+<<<<<<< HEAD
+});
+
+
+=======
   });
+>>>>>>> 34ab9f8d8d6c4a42b806f27876e8f78876b0a8b0
 
 function fixImage(resObject) {
 	if (resObject) {
@@ -46,17 +53,8 @@ module.exports = function (app) {
 	app.post("/api/login", passport.authenticate("local"), function (req, res) {
 		//So we're sending back the route to the favorite page because the redirect will happen on the front end
 		// They won't get this or even be able to access this page if they aren't authed
-		console.log(req.user.dataValues);
 		var data = req.user.dataValues
-		var hbsInfo = {
-			email: data.email,
-			userName: data.username,
-			about: data.about,
-			img_url: data.img_url,
-			like_dislike: data.like_dislike
-		}
-
-		res.render("favorite", hbsInfo);
+		res.json(data);
 	});
 
 	//route for creating a user and adding the user to the database
@@ -150,28 +148,28 @@ module.exports = function (app) {
 	//===============================
 
 	app.get("/", function (req, res) {
-    // If the user already has already logged in, send them to the favorite page
-    if (req.user) {
-      return res.redirect("/favorite");
-	}
-	res.render("index");
-  });
+		// If the user already has already logged in, send them to the favorite page
+		if (req.user) {
+			return res.redirect("/favorite");
+		}
+		res.render("index");
+	});
 
-  app.get("/login", function (req, res) {
-    // If the user already has an account send them to the favorite page
-    if (req.user) {
-      return res.redirect("/favorite");
-    }
-	res.render("index");
-  });
+	app.get("/login", function (req, res) {
+		// If the user already has an account send them to the favorite page
+		if (req.user) {
+			return res.redirect("/favorite");
+		}
+		res.render("index");
+	});
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/favorites", isAuthenticated, function (req, res) {
-	  db.favorites.findAll().then(function(favorite){
-		res.render("favorite", user);
-	  });
-	
-  });
+	// Here we've add our isAuthenticated middleware to this route.
+	// If a user who is not logged in tries to access this route they will be redirected to the signup page
+	app.get("/favorites", isAuthenticated, function (req, res) {
+		db.favorites.findAll().then(function (favorite) {
+			res.render("favorite", user);
+		});
+
+	});
 
 }

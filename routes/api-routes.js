@@ -130,16 +130,8 @@ module.exports = function (app) {
       }
     );
   });
-  });
-
-  app.get("/favorite", function (req, res){
-    var userfav = {
-      id: req.body.id
-    }
-    db.favorites.findOne(userfav).then(function(data){
-      console.log(data);
-    })
-  })
+  
+  
 
   app.post("/api/cart/", function (req, res) {
     var newCartItem = {
