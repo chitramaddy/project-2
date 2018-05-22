@@ -6,7 +6,11 @@ module.exports = function (sequelize, DataTypes) {
         // The user name cannot be null, and must be a proper user name before creation
         userName: {
             type: DataTypes.STRING,
+<<<<<<< HEAD
             unique: true,
+=======
+            unique: true
+>>>>>>> 34ab9f8d8d6c4a42b806f27876e8f78876b0a8b0
         },
         // The email cannot be null, and must be a proper email before creation
         email: {
