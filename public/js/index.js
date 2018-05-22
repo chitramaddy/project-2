@@ -252,10 +252,13 @@ $(document).ready(function () {
         formData.append("email", emailInput.val().trim());
         // append about me to form (password: '12345')
         formData.append("about", aboutInput.val().trim());
+        console.log(aboutInput.val());
 
         if ($("#signup-img-url").prop("files")[0]) {
             // append photo information to form (photo: {objOfPhotoInfo})
             formData.append("photo", $("#signup-img-url").prop("files")[0], $("#signup-img-url").prop("files")[0].name);
+        }else{
+            console.log("there is no image oscar");
         }
         console.log($("#signup-img-url").prop("files"));
 
@@ -267,6 +270,7 @@ $(document).ready(function () {
         userNameInput.val("");
         passwordInput.val("");
         emailInput.val("");
+        aboutInput.val(""); 
     });
 
     // Does a post to the signup route. If successful, we are redirected to the favorites page

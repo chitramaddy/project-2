@@ -19,6 +19,12 @@ var cloudname = keys.cloudinary.cloudname;
 var cloudapi_key = keys.cloudinary.api_key;
 var cloudapi_secret = keys.cloudinary.api_secret;
 
+cloudinary.config({
+	cloud_name: cloudname,
+	api_key: cloudapi_key,
+	api_secret: cloudapi_secret
+  });
+
 function fixImage(resObject) {
 	if (resObject) {
 		for (var i = 0; i < resObject.matches.length; i++) {
@@ -70,7 +76,8 @@ module.exports = function (app) {
 						userName: fields.userName,
 						email: fields.email,
 						password: fields.password,
-						photo: result.secure_url
+						img_url: result.secure_url, 
+						about: fields.about
 					}).then(function (userInfo) {
 						// Upon successful signup, log user in
 						req.login(userInfo, function (err) {
@@ -91,6 +98,7 @@ module.exports = function (app) {
 					userName: fields.userName,
 					email: fields.email,
 					password: fields.password,
+					about: fields.about
 				}).then(function (userInfo) {
 					// Upon successful signup, log user in
 					req.login(userInfo, function (err) {
