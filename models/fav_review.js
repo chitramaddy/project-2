@@ -33,9 +33,6 @@ module.exports = function (sequelize, DataTypes) {
 
     Favorite.associate = function (models) {
         Favorite.belongsTo(models.User, {
-            // through: {
-            //     model: userfavs
-            // }
             foreignKey: {
                 allowNull: false
             }

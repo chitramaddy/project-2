@@ -24,13 +24,7 @@ cloudinary.config({
 	cloud_name: cloudname,
 	api_key: cloudapi_key,
 	api_secret: cloudapi_secret
-<<<<<<< HEAD
-});
-
-
-=======
   });
->>>>>>> 34ab9f8d8d6c4a42b806f27876e8f78876b0a8b0
 
 function fixImage(resObject) {
 	if (resObject) {
@@ -84,7 +78,7 @@ module.exports = function (app) {
 								return res.status(422).json(err);
 							}
 							console.log(req.user);
-							res.json("favorite", userInfo);
+							res.render("favorite", userInfo);
 						});
 					}).catch(function (err) {
 						console.log(err)
@@ -124,7 +118,7 @@ module.exports = function (app) {
 	// Route for logging user out
 	app.get("/logout", function (req, res) {
 		req.logout();
-		res.redirect("/");
+		res.render("index");
 	});
 
 	app.get("/api/user_data", function (req, res) {
@@ -142,34 +136,6 @@ module.exports = function (app) {
 		}
 	});
 
-	//==============================
-	//html routes for user auth process
 
-	//===============================
-
-	app.get("/", function (req, res) {
-		// If the user already has already logged in, send them to the favorite page
-		if (req.user) {
-			return res.redirect("/favorite");
-		}
-		res.render("index");
-	});
-
-	app.get("/login", function (req, res) {
-		// If the user already has an account send them to the favorite page
-		if (req.user) {
-			return res.redirect("/favorite");
-		}
-		res.render("index");
-	});
-
-	// Here we've add our isAuthenticated middleware to this route.
-	// If a user who is not logged in tries to access this route they will be redirected to the signup page
-	app.get("/favorites", isAuthenticated, function (req, res) {
-		db.favorites.findAll().then(function (favorite) {
-			res.render("favorite", user);
-		});
-
-	});
 
 }
