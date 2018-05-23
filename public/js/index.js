@@ -257,8 +257,6 @@ $(document).ready(function () {
         if ($("#signup-img-url").prop("files")[0]) {
             // append photo information to form (photo: {objOfPhotoInfo})
             formData.append("photo", $("#signup-img-url").prop("files")[0], $("#signup-img-url").prop("files")[0].name);
-        }else{
-            console.log("there is no image oscar");
         }
         console.log($("#signup-img-url").prop("files"));
 
@@ -296,29 +294,31 @@ $(document).ready(function () {
         $("#alert").fadeIn(500);
     }
 
-    $("#recipes-modal").on("click", "#add-favorite", function () {
+    $(document).on("click", "#add-favorite", function () {
         var recipeId = $(this).attr("recipe-id");
         var recipeName = $(this).attr("recipe-name");
         var recipeImage = $(this).attr("image");
+        console.log(recipeId);
 
         var data = {
             id: recipeId,
             name: recipeName,
             image: recipeImage
         }
-        $.ajax("/api/favorites/", {
-            type: "POST",
-            data: data
+        // $.ajax("/api/favorites/", {
+        //     type: "POST",
+        //     data: data
 
-        }).then(function () {
-            console.log("Sent favorite data");
-            //do something to change the heart color or something
-        })
+        // }).then(function () {
+        //     console.log("Sent favorite data");
+        //     //do something to change the heart color or something
+        // })
     })
 
     $("#recipes-modal").on("click", "#share-favorite", function () {
         console.log($(this).attr("recipe-id"));
-    })
+    });
+
 
 
 });

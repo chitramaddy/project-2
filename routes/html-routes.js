@@ -12,7 +12,7 @@ module.exports = function (app) {
   });
 
   //route for displaying favorites page
-  /*
+  
   app.get("api/favorites", function (req, res) {
     db.Favorite.findAll({})
       .then(function (dbFavorite) {
@@ -20,10 +20,10 @@ module.exports = function (app) {
       });
 
   });
-  */
+  
 
-  //to delete a favorited item
-  /*
+  to delete a favorited item
+  
   app.delete("/api/favorites/:id", function (req, res) {
     db.Favorite.destroy({
       where: {
@@ -33,7 +33,7 @@ module.exports = function (app) {
       res.json(dbFavorite);
     });
   });
-  */
+  
 
   //========================================
 
