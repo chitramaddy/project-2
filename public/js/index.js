@@ -219,6 +219,7 @@ $(document).ready(function () {
 
         }).then(function () {
             console.log("Sent favorite data");
+            $("#add-favorite").css("color", "red");
             //do something to change the heart color or something
         })
     })
