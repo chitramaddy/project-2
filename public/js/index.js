@@ -229,10 +229,26 @@ $(document).ready(function () {
             type: "GET"
         }).then(function() {
             window.location.assign("/");
-
-
         })
     })
+
+    $("#open-home-page").on("click", function () {
+        $.ajax("/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/");
+        })
+    })
+
+    $("#open-favorite-page").on("click", function () {
+        $.ajax("/profile/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/profile/");
+        })
+    })
+
+
 
 
 });

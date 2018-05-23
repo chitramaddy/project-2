@@ -29,7 +29,7 @@ $(document).ready(function(){
             $("#login-modal").hide();
             $("#logged-in-divs").show();
             console.log(data);
-            window.location.assign("/favorite/" + data.id);
+            window.location.assign("/profile/");
         }).catch(function(err){
             console.log(err);
         });

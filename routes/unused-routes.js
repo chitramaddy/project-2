@@ -8,7 +8,7 @@
 		if (req.user) {
 			return res.redirect("/favorite");
 		}
-		res.render("index");
+    res.render("index");
 	});
 
 	
@@ -77,24 +77,22 @@
   });
   */
 
-  //to delete a favorited item
-  /*
-  app.delete("/api/favorites/:id", function (req, res) {
-    db.Favorite.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (dbFavorite) {
-      res.json(dbFavorite);
-    });
-  });
-  */
 
 
-
-
-
-
+ app.get("/api/user_data", function (req, res) {
+    if (!req.user) {
+        // The user is not logged in, send back an empty object
+        res.json({});
+    } else {
+        // Otherwise send back the user's email and id
+        // Sending back a password, even a hashed password, isn't a good idea
+        res.json({
+            email: req.user.email,
+            id: req.user.id,
+            photo: req.user.photo
+        });
+    }
+});
 
 
 
@@ -127,4 +125,17 @@
           res.render("cart", hbsObject);
         })
       });
+
+        //to delete a favorited item
+  /*
+  app.delete("/api/favorites/:id", function (req, res) {
+    db.Favorite.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function (dbFavorite) {
+      res.json(dbFavorite);
+    });
+  });
+  */
     

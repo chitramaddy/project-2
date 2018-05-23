@@ -23,31 +23,47 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/favorite/:id", function (req, res) {
+  app.get("/profile/", function (req, res) {
     //set variable to the current user
     var userSession = req.user;
     //if current user exists then send to the correct page, otherwise send user back to index page for now
     if (userSession){
       var user = {
         where: {
-          id: req.params.id
+          id: userSession.id
         },
         include: [db.Favorite]
       }
-
       db.User.findOne(user).then(function (data) {
+        console.log("this might return the foreign key");
+        //console.log(data);
         var hbsObject = {
-          data: data.dataValues
+          data: data.dataValues,
+          favoritesData: data.Favorites
         }
-        res.render("favorite", hbsObject);
+        console.log(hbsObject.favoritesData);
+        res.render("profile", hbsObject);
       })
 
 
     } else {
       res.render("index");
     }
-
-
   });
+
+  app.get("/cart/", function (req, res) {
+    var userSession = req.user;
+    if(userSession){
+      id = req.user.id;
+      db.Cart.findAll({
+        where: id,
+        include: [db.User]
+      }).then(function(item){
+        console.log(item);
+        res.json(item);
+      })
+    }
+
+  })
 
 };

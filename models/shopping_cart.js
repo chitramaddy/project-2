@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var cart = sequelize.define("Cart", {
+    var Cart = sequelize.define("Cart", {
 
         recipeId: {
             type: DataTypes.STRING
@@ -13,5 +13,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     });
-    return cart;
+
+    Cart.associate = function (models) {
+        Cart.belongsTo(models.User, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+    }
+
+    return Cart;
 };
