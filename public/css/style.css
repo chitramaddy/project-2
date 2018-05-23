@@ -401,3 +401,40 @@ div>#add-fav {
     display: none;
 }
 
+
+
+
+/* Cart Section */
+
+.cart {
+    text-align: left;
+    padding: 10px 0 50px 0;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+
+.cart-wrapper {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-rows: 1fr 5fr;
+    margin: 10px 20%;
+    background: rgba(255, 177, 32, 0.5);
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    
+ }
+
+ #cart-header {
+    border-bottom: 1px solid black;
+}
+
+.cart-item > ul { 
+    padding: 10px 0;
+}
+
+.cart-item > ul > li{
+    color: black;
+    font-family: 'Pontano Sans', sans-serif;
+
+}

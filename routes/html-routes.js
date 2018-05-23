@@ -41,10 +41,8 @@ module.exports = function (app) {
         }
         res.render("profile", hbsObject);
       })
-
-
     } else {
-      res.render("index");
+      res.redirect("/");
     }
   });
 
@@ -62,7 +60,7 @@ module.exports = function (app) {
       db.User.findOne(user).then(function (data) {
         console.log(data);
         var hbsObject = {
-          cartItems: data
+          cartItems: data.Carts
         };
         res.render("cart", hbsObject);
       })
