@@ -95,11 +95,13 @@ $(document).ready(function () {
     //  Event listener:  click to open login modal
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();
+        $("#login-error").empty();
     })
 
     //  Event listener:  click to open sign-up modal
     $("#open-signup-modal").on("click", function () {
         $("#signup-modal").show();
+        $("#signup-error").empty();
     })
 
     //  Event listener: click to close(hide) the modal
@@ -211,14 +213,14 @@ $(document).ready(function () {
             name: recipeName,
             image: recipeImage
         }
-        // $.ajax("/api/favorites/", {
-        //     type: "POST",
-        //     data: data
+        $.ajax("/api/favorites/", {
+            type: "POST",
+            data: data
 
-        // }).then(function () {
-        //     console.log("Sent favorite data");
-        //     //do something to change the heart color or something
-        // })
+        }).then(function () {
+            console.log("Sent favorite data");
+            //do something to change the heart color or something
+        })
     })
 
     $("#recipes-modal").on("click", "#share-favorite", function () {

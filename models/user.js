@@ -6,11 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         // The user name cannot be null, and must be a proper user name before creation
         userName: {
             type: DataTypes.STRING,
-<<<<<<< HEAD
-            unique: true,
-=======
             unique: true
->>>>>>> 160a7436747bcc437af3d2962571ee2ccc9c99b9
         },
         // The email cannot be null, and must be a proper email before creation
         email: {
@@ -40,6 +36,11 @@ module.exports = function (sequelize, DataTypes) {
 
     });
 
+    User.associate = function(models){
+        User.hasMany(models.Favorite, {
+            
+        })
+    }
 
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);

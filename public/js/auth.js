@@ -5,10 +5,12 @@ $(document).ready(function(){
     var loginForm = $("form#login-form");
     var userName = $("input#login-username");
     var password = $("input#login-password");
+    
 
     // When the form is submitted, we validate there's an username and password entered
     loginForm.on("submit", function (event) {
         event.preventDefault();
+
         var loginInfo = {
             userName: userName.val().trim(),
             password: password.val().trim()
@@ -32,6 +34,7 @@ $(document).ready(function(){
             window.location.assign("/profile/");
         }).catch(function(err){
             console.log(err);
+            $("#login-error").text("Username does not exist");
         });
     }
     //  Event listener:  click to send signup information
@@ -59,23 +62,18 @@ $(document).ready(function(){
         if ($("#signup-img-url").prop("files")[0]) {
             // append photo information to form (photo: {objOfPhotoInfo})
             formData.append("photo", $("#signup-img-url").prop("files")[0], $("#signup-img-url").prop("files")[0].name);
-        }else{
-            console.log("there is no image oscar");
         }
         console.log($("#signup-img-url").prop("files"));
 
-        // if (!userData.email || !userData.password) {
-        //   return;
-        // }
+        if (!userData.email || !userData.password) {
+          return;
+        }
         // If we have an email and password, run the signUpUser function
         signUpUser(formData);
         userNameInput.val("");
         passwordInput.val("");
         emailInput.val("");
-        aboutInput.val(""); 
-        $("#signup-modal").hide();
-
-
+        aboutInput.val("");
     });
 
     // Does a post to the signup route. If successful, we are redirected to the favorites page
@@ -90,18 +88,13 @@ $(document).ready(function(){
             method: 'POST',
         }).then(function (data) {
             console.log(data);
-            window.location.replace(data)
+            $("#sign-up-modal").hide();
+            window.location.assign("/profile/");
+
             // If there's an error, handle it by throwing up alert
-        }).catch(handleLoginErr);
+        }).catch(function(err){
+            $("#sign-up-modal").show();
+            $("#signup-error").text("Username already in use");
+        });
     }
-
-    function handleLoginErr(err) {
-        console.log(err);
-        $("#alert .msg").text(err);
-        $("#alert").fadeIn(500);
-    }
-
-
-
-
 })
