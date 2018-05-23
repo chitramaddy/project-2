@@ -35,13 +35,10 @@ module.exports = function (app) {
         include: [db.Favorite]
       }
       db.User.findOne(user).then(function (data) {
-        console.log("this might return the foreign key");
-        //console.log(data);
         var hbsObject = {
           data: data.dataValues,
           favoritesData: data.Favorites
         }
-        console.log(hbsObject.favoritesData);
         res.render("profile", hbsObject);
       })
 
@@ -52,18 +49,27 @@ module.exports = function (app) {
   });
 
   app.get("/cart/", function (req, res) {
+    //set variable to the current user
     var userSession = req.user;
-    if(userSession){
-      id = req.user.id;
-      db.Cart.findAll({
-        where: id,
-        include: [db.User]
-      }).then(function(item){
-        console.log(item);
-        res.json(item);
+    //if current user exists then send to the correct page, otherwise send user back to index page for now
+    if (userSession){
+      var user = {
+        where: {
+          id: userSession.id
+        },
+        include: [db.Cart]
+      }
+      db.User.findOne(user).then(function (data) {
+        console.log(data);
+        var hbsObject = {
+          cartItems: data
+        };
+        res.render("cart", hbsObject);
       })
-    }
 
-  })
+    } else {
+      res.render("index");
+    }
+  });
 
 };

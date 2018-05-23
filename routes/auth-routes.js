@@ -74,7 +74,7 @@ module.exports = function (app) {
 								console.log(err)
 								return res.status(422).json(err);
 							}
-							res.render("favorite", userInfo);
+							res.render("profile", userInfo);
 						});
 					}).catch(function (err) {
 						console.log(err)
@@ -94,7 +94,6 @@ module.exports = function (app) {
 							console.log(err)
 							return res.status(422).json(err);
 						}
-						console.log(JSON.stringify(userInfo));
 						var hbsInfo = {
 							userName: (JSON.stringify(userInfo)).userName,
 							email: (JSON.stringify(userInfo)).email,

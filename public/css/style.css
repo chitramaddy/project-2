@@ -104,7 +104,7 @@ h6 {
 
 /* Results */
 
-#results-area {
+#results-area, #favorites-area{
     padding: 20px 10px;
     background-color: #fff8dc;
     display: grid;
@@ -345,7 +345,14 @@ div>#add-fav {
 }
 
 
-/* Favorites Page */
+/* Profile Page */
+
+.profile {
+    text-align: center;
+    padding: 10px 0 50px 0;
+    display: grid;
+    grid-template-rows: 1fr;
+}
 
 .profile-wrapper {
     display: grid;
