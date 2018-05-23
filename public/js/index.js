@@ -232,7 +232,16 @@ $(document).ready(function () {
         })
     })
 
-    $("#open-home-page").on("click", function () {
+    $("#favorites-area").on("click", ".result", function(){
+        var recipeId = $(this).attr("recipe-id");
+        $.ajax(("/recipes/" + recipeId), {
+            type: "GET"
+        }).then(function (response) {
+            renderRecipe(response);
+        })
+    })
+
+    $("#open-home-page").on("click", function() {
         $.ajax("/", {
             type: "GET"
         }).then(function() {
@@ -240,13 +249,23 @@ $(document).ready(function () {
         })
     })
 
-    $("#open-favorite-page").on("click", function () {
+    $("#open-favorite-page").on("click", function() {
         $.ajax("/profile/", {
             type: "GET"
         }).then(function() {
             window.location.assign("/profile/");
         })
     })
+
+    $("#open-cart-page").on("click", function() {
+        $.ajax("/cart/", {
+            type: "GET"
+        }).then(function() {
+            window.location.assign("/cart/");
+        })
+    })
+
+    
 
 
 
