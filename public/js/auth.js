@@ -30,7 +30,6 @@ $(document).ready(function(){
         }).then(function(data){
             $("#login-modal").hide();
             $("#logged-in-divs").show();
-            console.log(data);
             window.location.assign("/profile/");
         }).catch(function(err){
             console.log(err);

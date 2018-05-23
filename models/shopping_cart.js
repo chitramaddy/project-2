@@ -1,6 +1,7 @@
+var userfavs = require("./userfavs");
+
 module.exports = function (sequelize, DataTypes) {
     var Cart = sequelize.define("Cart", {
-
         recipeId: {
             type: DataTypes.STRING
         }, 
