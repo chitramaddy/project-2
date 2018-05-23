@@ -95,11 +95,13 @@ $(document).ready(function () {
     //  Event listener:  click to open login modal
     $("#open-login-modal").on("click", function () {
         $("#login-modal").show();
+        $("#login-error").empty();
     })
 
     //  Event listener:  click to open sign-up modal
     $("#open-signup-modal").on("click", function () {
         $("#signup-modal").show();
+        $("#signup-error").empty();
     })
 
     //  Event listener: click to close(hide) the modal
@@ -204,6 +206,7 @@ $(document).ready(function () {
         var recipeId = $(this).attr("recipe-id");
         var recipeName = $(this).attr("recipe-name");
         var recipeImage = $(this).attr("image");
+        console.log(recipeId);
 
         var data = {
             id: recipeId,
@@ -222,7 +225,8 @@ $(document).ready(function () {
 
     $("#recipes-modal").on("click", "#share-favorite", function () {
         console.log($(this).attr("recipe-id"));
-    })
+    });
+
 
     $("#log-out").on("click", function(){
         $.ajax("/logout", {

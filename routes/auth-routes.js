@@ -99,7 +99,7 @@ module.exports = function (app) {
 							email: (JSON.stringify(userInfo)).email,
 							about: (JSON.stringify(userInfo)).about
 						}
-						return res.render("favorite", hbsInfo);
+						return res.render("profile", hbsInfo);
 					});
 				}).catch(function (err) {
 					console.log(err);

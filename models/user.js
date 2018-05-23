@@ -36,10 +36,18 @@ module.exports = function (sequelize, DataTypes) {
 
     });
 
+<<<<<<< HEAD
+    User.associate = function(models){
+        User.hasMany(models.Favorite, {
+            
+        })
+    }
+=======
     User.associate = function (models) {
         User.hasMany(models.Favorite);
     }
 
+>>>>>>> c820f33cb4c53bfd32f78c68f912b0fc598830b1
 
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
